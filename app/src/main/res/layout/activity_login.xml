@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="16dp"
     android:layout_centerInParent="true"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
     tools:context=".LoginActivity">
 
 
@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_below="@id/etUsername"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" />
@@ -31,6 +32,7 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/etPassword"
         android:layout_weight="1"
         android:backgroundTint="#2196F3"
         android:text="log in " />
@@ -39,10 +41,10 @@
         android:id="@+id/btnCreateAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btnLogin"
         android:layout_weight="1"
         android:backgroundTint="#4CAF50"
         android:text="create an account" />
 
 
-
-</LinearLayout>
+</RelativeLayout>

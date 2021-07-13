@@ -71,11 +71,11 @@ public class LoginActivity extends AppCompatActivity {
                             e.toString(),
                             Toast.LENGTH_SHORT)
                             .show();
+                } else {
+                    // navigate to main activity if the user has signed in properly
+                    goMainActivity();
+                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                 }
-
-                // navigate to main activity if the user has signed in properly
-                goMainActivity();
-                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
             }
         });
 

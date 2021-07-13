@@ -11,10 +11,10 @@ public class ParseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         // Register your parse models
-        //ParseObject.registerSubclass(Post.class);
+        ParseObject.registerSubclass(UserMeasurement.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("kKvnZRoo4Gl7mkMAvY2uuwruAMsktVhU8BfygVQ7")
-                .clientKey("JEbNJW3AEX7wyaP1bDsNdTtyUpQX4dKwqqftX5KB")
+                .applicationId("DouOn8b9GOFYkKiRsxIo8keR39badQgCQgm6BFhi")
+                .clientKey("1ucpGCPkprDB2Z5W3Yv8Ec9HYHHFQyBfVmEcU27F")
                 .server("https://parseapi.back4app.com")
                 .build()
         );

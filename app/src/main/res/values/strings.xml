@@ -4,4 +4,5 @@
     <string name="chest">Chest "</string>
     <string name="waist">Waist "</string>
     <string name="hip_inches">Hip "</string>
+    <string name="weight_lb">Weight(lb)</string>
 </resources>
