@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    android:layout_centerInParent="true"
+    tools:context=".SignupActivity">
+
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="1dp"
+        android:text="Welcome!"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvBasicInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvWelcome"
+        android:text="Basic Information"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/etNameSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvBasicInfo"
+        android:layout_marginTop="10dp"
+        android:hint="Name"
+        android:textAlignment="viewStart" />
+
+    <EditText
+        android:id="@+id/etEmailSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etNameSignup"
+        android:layout_marginTop="10dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textAlignment="viewStart" />
+
+    <EditText
+        android:id="@+id/etUsernameSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etEmailSignup"
+        android:layout_marginTop="10dp"
+        android:hint="Username"
+        android:textAlignment="viewStart" />
+
+
+    <EditText
+        android:id="@+id/etPasswordSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etUsernameSignup"
+        android:layout_marginTop="10dp"
+        android:hint="Password"
+        android:textAlignment="viewStart" />
+
+    <TextView
+        android:id="@+id/tvSizingInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPasswordSignup"
+        android:text="Sizing Information"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/etHeightSignup"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSizingInfo"
+        android:hint="@string/height"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/etChestSignup"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSizingInfo"
+        android:layout_toEndOf="@id/etHeightSignup"
+        android:hint="@string/chest"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/etWaistSignup"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSizingInfo"
+        android:layout_toEndOf="@id/etChestSignup"
+        android:hint="@string/waist"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/etHipSignup"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSizingInfo"
+        android:layout_toEndOf="@id/etWaistSignup"
+        android:hint="@string/hip_inches"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="35dp"
+        android:layout_below="@id/etHeightSignup"
+        android:backgroundTint="#4CAF50"
+        android:text="sign up" />
+
+
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PersonalProject</string>
+    <string name="height">Height "</string>
+    <string name="chest">Chest "</string>
+    <string name="waist">Waist "</string>
+    <string name="hip_inches">Hip "</string>
+</resources>
