@@ -1,4 +1,4 @@
-package com.example.personalproject;
+package com.example.personalproject.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.personalproject.databinding.ActivityLoginBinding;
+import com.example.personalproject.models.UserMeasurement;
 import com.example.personalproject.databinding.ActivitySignupBinding;
 import com.parse.ParseException;
 import com.parse.ParseUser;

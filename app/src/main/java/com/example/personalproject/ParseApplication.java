@@ -2,6 +2,7 @@ package com.example.personalproject;
 
 import android.app.Application;
 
+import com.example.personalproject.models.UserMeasurement;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

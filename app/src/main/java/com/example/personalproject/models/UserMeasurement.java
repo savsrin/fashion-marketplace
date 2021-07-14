@@ -1,4 +1,4 @@
-package com.example.personalproject;
+package com.example.personalproject.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_margin="16dp"
     android:layout_centerInParent="true"
-    tools:context=".SignupActivity">
+    tools:context=".activities.SignupActivity">
 
 
     <TextView
