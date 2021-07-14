@@ -67,6 +67,8 @@ public class CreateFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        // set up location autocomplete fragment
         autocompleteFragment = (AutocompleteSupportFragment)
                 getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
@@ -84,6 +86,8 @@ public class CreateFragment extends Fragment {
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
+
+
 
     }
 }

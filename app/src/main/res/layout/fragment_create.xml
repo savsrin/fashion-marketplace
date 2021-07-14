@@ -19,14 +19,85 @@
         android:ems="10"
         android:hint="Item Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="20sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvItemPickup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivItemImage"
+        android:text="Item Pickup Location"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold" />
+
 
     <fragment android:id="@+id/autocomplete_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        android:layout_below="@id/etItemName"
+        android:layout_below="@id/tvItemPickup"
         />
 
+    <Button
+        android:id="@+id/btnCaptureImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etItemName"
+        android:ems="10"
+        android:text="Take Item Picture" />
+
+    <ImageView
+        android:id = "@+id/ivItemImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/btnCaptureImage"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvItemDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/autocomplete_fragment"
+        android:text="Item Details"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etPrice"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvItemDetails"
+        android:hint="Price ($)"
+        android:inputType="numberDecimal"
+        />
+
+    <EditText
+        android:id="@+id/etBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvItemDetails"
+        android:layout_marginStart="5dp"
+        android:hint="Brand"
+        android:inputType="numberDecimal"
+        android:layout_toEndOf="@id/etPrice"
+        />
+
+
+    <EditText
+        android:id="@+id/etSizingInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPrice"
+        android:hint="Sizing Information"
+        />
+
+    <Spinner
+        android:id="@+id/conditionSpinner"
+        android:layout_below="@id/etSizingInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
