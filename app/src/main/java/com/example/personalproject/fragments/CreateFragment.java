@@ -1,21 +1,32 @@
 package com.example.personalproject.fragments;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.personalproject.R;
 import com.example.personalproject.databinding.FragmentCreateBinding;
@@ -26,20 +37,28 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This fragment contains the implementation for a user to upload a clothing item
+ * that they wish to sell to the marketplace.
  */
 public class CreateFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     public static final String TAG = "CreateFragment";
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
 
     private FragmentCreateBinding binding;
     private AutocompleteSupportFragment autocompleteFragment;
+    private File photoFile;
+    public String photoFileName = "photo.jpg";
+    public String resizedFileName = "photo_resized.jpg";
+
 
 
 
@@ -68,10 +87,10 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        binding = FragmentCreateBinding.inflate(getLayoutInflater());
-       
+       Spinner itemSizeSpinner = binding.itemSizeSpinner;
 
-
-        Spinner itemSizeSpinner = binding.itemSizeSpinner;
+//        ArrayAdapter<String> itemSizeAdapter = new ArrayAdapter<String>(
+//                getContext(),android.R.layout.simple_spinner_item, R.array.sizing_array);
 
         ArrayAdapter<CharSequence> itemSizeAdapter = new ArrayAdapter<CharSequence>(
                 getContext(),android.R.layout.simple_spinner_item, R.array.sizing_array){
@@ -108,7 +127,6 @@ public class CreateFragment extends Fragment {
 //                R.array.sizing_array, android.R.layout.simple_spinner_item);
         itemSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         itemSizeSpinner.setAdapter(itemSizeAdapter);
-
         itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -204,5 +222,108 @@ public class CreateFragment extends Fragment {
 
 
 
+
+        binding.btnCaptureImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchCamera();
+            }
+        });
+
+
+
+    }
+
+
+    private void launchCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Create a File reference for future access
+        photoFile = getPhotoFileUri(photoFileName);
+
+        Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.personalproject.fileprovider", photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        }
+    }
+
+    // Returns the File for a photo stored on disk given the fileName
+    private File getPhotoFileUri(String photoFileName) {
+
+        File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+
+        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+            Log.d(TAG, "failed to create directory");
+        }
+
+        return new File(mediaStorageDir.getPath() + File.separator + photoFileName);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == android.app.Activity.RESULT_OK) {
+                // by this point we have the camera photo on disk
+                photoFile = getPhotoFileUri(photoFileName);
+                Bitmap takenImage = rotateBitmapOrientation(photoFile.getAbsolutePath());
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 500);
+                resizedBitmap = cropSquare(resizedBitmap);
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
+                File resizedFile = getPhotoFileUri(resizedFileName);
+                try {
+                    resizedFile.createNewFile();
+                    FileOutputStream fos = null;
+                    fos = new FileOutputStream(resizedFile);
+                    fos.write(bytes.toByteArray());
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // Load the taken image into a preview
+                photoFile = resizedFile;
+                binding.ivItemImage.setImageBitmap(resizedBitmap);
+            } else { // Result was a failure
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private Bitmap cropSquare(Bitmap bitmap) {
+        // Tutorial: https://stackoverflow.com/questions/6908604/android-crop-center-of-bitmap
+        int minLength = Math.min(bitmap.getHeight(), bitmap.getWidth());
+        return Bitmap.createBitmap(bitmap, 0, 0, minLength, minLength);
+    }
+
+
+    private Bitmap rotateBitmapOrientation(String photoFilePath) {
+        // Create and configure BitmapFactory
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(photoFilePath, bounds);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        Bitmap bm = BitmapFactory.decodeFile(photoFilePath, opts);
+        // Read EXIF Data
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(photoFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+        int rotationAngle = 0;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
+        // Rotate Bitmap
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
+        return rotatedBitmap;
     }
 }
