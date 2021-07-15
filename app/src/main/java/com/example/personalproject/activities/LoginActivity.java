@@ -41,9 +41,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick Login button");
-                String username = binding.etUsername.getText().toString();
-                String password = binding.etPassword.getText().toString();
-                loginUser(username, password);
+                loginUser(binding.etUsername.getText().toString()
+                        , binding.etPassword.getText().toString());
             }
         });
     }
@@ -76,11 +75,5 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
-
-
-
 }

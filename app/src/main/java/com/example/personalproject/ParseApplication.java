@@ -11,7 +11,6 @@ public class ParseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // Register your parse models
         ParseObject.registerSubclass(UserMeasurement.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(getString(R.string.parse_application_id))

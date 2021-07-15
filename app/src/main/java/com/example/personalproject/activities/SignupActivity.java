@@ -19,6 +19,7 @@ import com.parse.SignUpCallback;
 public class SignupActivity extends AppCompatActivity {
 
     public static final String TAG = "SignupActivity";
+
     ActivitySignupBinding binding;
     String name;
     String email;
@@ -93,7 +94,6 @@ public class SignupActivity extends AppCompatActivity {
                         signupUser();
                     }
                 });
-
             }
         });
     }
