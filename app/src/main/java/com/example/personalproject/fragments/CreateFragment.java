@@ -1,5 +1,6 @@
 package com.example.personalproject.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.personalproject.R;
 import com.example.personalproject.databinding.FragmentCreateBinding;
@@ -60,7 +65,9 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        binding = FragmentCreateBinding.inflate(getLayoutInflater());
+
        return binding.getRoot();
+
     }
 
     @Override
@@ -84,6 +91,76 @@ public class CreateFragment extends Fragment {
             @Override
             public void onError(@NonNull Status status) {
                 Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+
+        Spinner itemConditionSpinner = binding.conditionSpinner;
+
+        ArrayAdapter<CharSequence> itemConditionAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.condition_array, android.R.layout.simple_spinner_item);
+        itemConditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemConditionSpinner.setAdapter(itemConditionAdapter);
+
+        itemConditionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0 ) {
+                    Log.i(TAG, parent.getItemAtPosition(position).toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.i(TAG, "No item condition selected");
+
+            }
+        });
+
+
+
+        Spinner itemSizeSpinner = binding.itemSizeSpinner;
+
+        ArrayAdapter<CharSequence> itemSizeAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.sizing_array, android.R.layout.simple_spinner_item);
+        itemConditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemSizeSpinner.setAdapter(itemSizeAdapter);
+
+        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0 ) {
+                    Log.i(TAG, parent.getItemAtPosition(position).toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.i(TAG, "No item size selected");
+
+            }
+        });
+
+
+
+        Spinner itemTypeSpinner = binding.itemTypeSpinner;
+
+        ArrayAdapter<CharSequence> itemTypeAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.item_type, android.R.layout.simple_spinner_item);
+        itemConditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemTypeSpinner.setAdapter(itemTypeAdapter);
+
+        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0 ) {
+                    Log.i(TAG, parent.getItemAtPosition(position).toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.i(TAG, "No item type selected");
+
             }
         });
 

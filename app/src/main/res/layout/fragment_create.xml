@@ -19,7 +19,7 @@
         android:ems="10"
         android:hint="Item Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="20sp"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
@@ -27,9 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivItemImage"
-        android:text="Item Pickup Location"
-        android:textSize="20dp"
         android:layout_marginTop="10dp"
+        android:text="Item Pickup Location"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
 
@@ -59,10 +59,10 @@
         android:id="@+id/tvItemDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_below="@id/autocomplete_fragment"
+        android:layout_marginTop="10dp"
         android:text="Item Details"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <EditText
@@ -71,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvItemDetails"
         android:hint="Price ($)"
+        android:ems="10"
         android:inputType="numberDecimal"
         />
 
@@ -80,24 +81,54 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvItemDetails"
         android:layout_marginStart="5dp"
-        android:hint="Brand"
-        android:inputType="numberDecimal"
         android:layout_toEndOf="@id/etPrice"
-        />
+        android:ems="10"
+        android:hint="Brand"
+        android:maxLines="1" />
 
 
     <EditText
-        android:id="@+id/etSizingInfo"
+        android:id="@+id/etDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/etPrice"
-        android:hint="Sizing Information"
+        android:ems="10"
+        android:hint="Item description (sizing, measurements, etc.)"
         />
+
 
     <Spinner
         android:id="@+id/conditionSpinner"
-        android:layout_below="@id/etSizingInfo"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/etDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
+    <Spinner
+        android:id="@+id/itemSizeSpinner"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/conditionSpinner"/>
+
+
+    <Spinner
+        android:id="@+id/itemTypeSpinner"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemSizeSpinner" />
+
+    <Button
+        android:id = "@+id/btnSubmit"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemTypeSpinner"
+        android:text="Publish" />
+
+
+
 
 </RelativeLayout>

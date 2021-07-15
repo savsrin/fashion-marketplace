@@ -7,4 +7,44 @@
     <string name="weight_lb">Weight(lb)</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="condition_array">
+        <item> Select an item condition..</item>
+        <item>New With Tags</item>
+        <item>Hardly Worn</item>
+        <item>Used: Excellent </item>
+        <item>Used: Good</item>
+        <item>Used: Fair</item>
+        <item>Very Used</item>
+    </string-array>
+
+    <string-array name="sizing_array">
+        <item> Select an item size..</item>
+        <item>XXS</item>
+    <item>XS</item>
+    <item>S</item>
+    <item>M</item>
+    <item>L</item>
+    <item>XL</item>
+    <item>XXL</item>
+        <item>XXXL</item>
+</string-array>
+
+    <string-array name="item_type">
+        <item> Select an item type..</item>
+        <item> top </item>
+        <item> jacket </item>
+        <item> coat </item>
+        <item> dress </item>
+        <item> jumpsuit</item>
+        <item> shorts </item>
+        <item> skirt </item>
+        <item> jeans </item>
+        <item> activewear </item>
+        <item> pants </item>
+        <item> undergarment </item>
+        <item> swimwear </item>
+        <item> other </item>
+    </string-array>
+
 </resources>
