@@ -58,6 +58,9 @@ public class CreateFragment extends Fragment {
         PlacesClient placesClient = Places.createClient(getContext());
 
 
+
+
+
     }
 
     @Override
@@ -65,8 +68,64 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        binding = FragmentCreateBinding.inflate(getLayoutInflater());
+       
 
-       return binding.getRoot();
+
+        Spinner itemSizeSpinner = binding.itemSizeSpinner;
+
+        ArrayAdapter<CharSequence> itemSizeAdapter = new ArrayAdapter<CharSequence>(
+                getContext(),android.R.layout.simple_spinner_item, R.array.sizing_array){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // Disable the first item from Spinner
+                    // First item will be use for hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+//                ArrayAdapter.createFromResource(getContext(),
+//                R.array.sizing_array, android.R.layout.simple_spinner_item);
+        itemSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemSizeSpinner.setAdapter(itemSizeAdapter);
+
+        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0 ) {
+                    Log.i(TAG, parent.getItemAtPosition(position).toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.i(TAG, "No item size selected");
+
+            }
+        });
+
+        return binding.getRoot();
+
 
     }
 
@@ -118,27 +177,6 @@ public class CreateFragment extends Fragment {
 
 
 
-        Spinner itemSizeSpinner = binding.itemSizeSpinner;
-
-        ArrayAdapter<CharSequence> itemSizeAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.sizing_array, android.R.layout.simple_spinner_item);
-        itemConditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        itemSizeSpinner.setAdapter(itemSizeAdapter);
-
-        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0 ) {
-                    Log.i(TAG, parent.getItemAtPosition(position).toString());
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.i(TAG, "No item size selected");
-
-            }
-        });
 
 
 
@@ -146,10 +184,10 @@ public class CreateFragment extends Fragment {
 
         ArrayAdapter<CharSequence> itemTypeAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.item_type, android.R.layout.simple_spinner_item);
-        itemConditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         itemTypeSpinner.setAdapter(itemTypeAdapter);
 
-        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        itemTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0 ) {
