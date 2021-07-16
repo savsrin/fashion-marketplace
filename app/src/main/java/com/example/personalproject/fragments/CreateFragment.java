@@ -181,12 +181,40 @@ public class CreateFragment extends Fragment {
             }
         });
 
+       Spinner itemSizeSpinner = binding.itemSizeSpinner;
+       ArrayAdapter<CharSequence> itemSizeAdapter = new ArrayAdapter<CharSequence>(
+               getContext(),
+               android.R.layout.simple_spinner_item,
+               getContext().getResources().getStringArray(R.array.sizing_array)){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // first item disabled; used as hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
 
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
 
-
-        Spinner itemSizeSpinner = binding.itemSizeSpinner;
-        ArrayAdapter<CharSequence> itemSizeAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.sizing_array, android.R.layout.simple_spinner_item);
         itemSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         itemSizeSpinner.setAdapter(itemSizeAdapter);
         itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -207,14 +235,43 @@ public class CreateFragment extends Fragment {
         });
 
 
-
+        
         Spinner itemConditionSpinner = binding.conditionSpinner;
+        ArrayAdapter<CharSequence> itemConditionAdapter = new ArrayAdapter<CharSequence>(
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                getContext().getResources().getStringArray(R.array.condition_array)){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // first item disabled; used as hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
 
-        ArrayAdapter<CharSequence> itemConditionAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.condition_array, android.R.layout.simple_spinner_item);
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
         itemConditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         itemConditionSpinner.setAdapter(itemConditionAdapter);
-
         itemConditionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -234,15 +291,42 @@ public class CreateFragment extends Fragment {
 
 
 
-
-
         Spinner itemTypeSpinner = binding.itemTypeSpinner;
+        ArrayAdapter<CharSequence> itemTypeAdapter = new ArrayAdapter<CharSequence>(
+                getContext(),
+                android.R.layout.simple_spinner_item,
+                getContext().getResources().getStringArray(R.array.item_type)){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    // first item disabled; used as hint
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
 
-        ArrayAdapter<CharSequence> itemTypeAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.item_type, android.R.layout.simple_spinner_item);
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
         itemTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         itemTypeSpinner.setAdapter(itemTypeAdapter);
-
         itemTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
