@@ -29,13 +29,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.personalproject.R;
+import com.example.personalproject.activities.SignupActivity;
 import com.example.personalproject.databinding.FragmentCreateBinding;
+import com.example.personalproject.models.Item;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -53,11 +61,20 @@ public class CreateFragment extends Fragment {
     public static final String TAG = "CreateFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
 
+    public String photoFileName = "photo.jpg";
+    public String resizedFileName = "photo_resized.jpg";
+
     private FragmentCreateBinding binding;
     private AutocompleteSupportFragment autocompleteFragment;
     private File photoFile;
-    public String photoFileName = "photo.jpg";
-    public String resizedFileName = "photo_resized.jpg";
+    private String displayName;
+    private String brand;
+    private String description;
+    private String size;
+    private String condition;
+    private String type;
+    private ParseGeoPoint pickupLocation;
+    private Double price;
 
 
 
@@ -87,60 +104,60 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        binding = FragmentCreateBinding.inflate(getLayoutInflater());
-       Spinner itemSizeSpinner = binding.itemSizeSpinner;
+//       Spinner itemSizeSpinner = binding.itemSizeSpinner;
 
 //        ArrayAdapter<String> itemSizeAdapter = new ArrayAdapter<String>(
 //                getContext(),android.R.layout.simple_spinner_item, R.array.sizing_array);
 
-        ArrayAdapter<CharSequence> itemSizeAdapter = new ArrayAdapter<CharSequence>(
-                getContext(),android.R.layout.simple_spinner_item, R.array.sizing_array){
-            @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if(position == 0){
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                }
-                else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
+//        ArrayAdapter<CharSequence> itemSizeAdapter = new ArrayAdapter<CharSequence>(
+//                getContext(),android.R.layout.simple_spinner_item, R.array.sizing_array){
+//            @Override
+//            public boolean isEnabled(int position){
+//                if(position == 0)
+//                {
+//                    // Disable the first item from Spinner
+//                    // First item will be use for hint
+//                    return false;
+//                }
+//                else
+//                {
+//                    return true;
+//                }
+//            }
+//            @Override
+//            public View getDropDownView(int position, View convertView,
+//                                        ViewGroup parent) {
+//                View view = super.getDropDownView(position, convertView, parent);
+//                TextView tv = (TextView) view;
+//                if(position == 0){
+//                    // Set the hint text color gray
+//                    tv.setTextColor(Color.GRAY);
+//                }
+//                else {
+//                    tv.setTextColor(Color.BLACK);
+//                }
+//                return view;
+//            }
+//        };
 
 //                ArrayAdapter.createFromResource(getContext(),
 //                R.array.sizing_array, android.R.layout.simple_spinner_item);
-        itemSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        itemSizeSpinner.setAdapter(itemSizeAdapter);
-        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0 ) {
-                    Log.i(TAG, parent.getItemAtPosition(position).toString());
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.i(TAG, "No item size selected");
-
-            }
-        });
+//        itemSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        itemSizeSpinner.setAdapter(itemSizeAdapter);
+//        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (position > 0 ) {
+//                    Log.i(TAG, parent.getItemAtPosition(position).toString());
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//                Log.i(TAG, "No item size selected");
+//
+//            }
+//        });
 
         return binding.getRoot();
 
@@ -160,16 +177,43 @@ public class CreateFragment extends Fragment {
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                // TODO: Get info about the selected place.
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() +"," + place.getLatLng());
-
+                pickupLocation = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
             }
 
             @Override
             public void onError(@NonNull Status status) {
                 Log.i(TAG, "An error occurred: " + status);
+                pickupLocation = null;
             }
         });
+
+
+
+
+        Spinner itemSizeSpinner = binding.itemSizeSpinner;
+        ArrayAdapter<CharSequence> itemSizeAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.sizing_array, android.R.layout.simple_spinner_item);
+        itemSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemSizeSpinner.setAdapter(itemSizeAdapter);
+        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0 ) {
+                    Log.i(TAG, parent.getItemAtPosition(position).toString());
+                    size = parent.getItemAtPosition(position).toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.i(TAG, "No item size selected");
+                size = "";
+
+            }
+        });
+
+
 
         Spinner itemConditionSpinner = binding.conditionSpinner;
 
@@ -183,13 +227,14 @@ public class CreateFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0 ) {
                     Log.i(TAG, parent.getItemAtPosition(position).toString());
+                    condition = parent.getItemAtPosition(position).toString();
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.i(TAG, "No item condition selected");
-
+                condition = "";
             }
         });
 
@@ -210,16 +255,17 @@ public class CreateFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0 ) {
                     Log.i(TAG, parent.getItemAtPosition(position).toString());
+                    type = parent.getItemAtPosition(position).toString();
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.i(TAG, "No item type selected");
+                type = "";
 
             }
         });
-
 
 
 
@@ -230,8 +276,84 @@ public class CreateFragment extends Fragment {
             }
         });
 
+        binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description = binding.etDescription.getText().toString();
+                displayName = binding.etItemName.getText().toString();
+                brand = binding.etBrand.getText().toString();
+                String priceString = binding.etPrice.getText().toString();
 
 
+                if (description.isEmpty()
+                        || displayName.isEmpty()
+                        || brand.isEmpty()
+                        || priceString.isEmpty()
+                        || condition.isEmpty()
+                        || type.isEmpty()
+                        || size.isEmpty()
+                        || pickupLocation == null
+                 ) {
+                    Toast.makeText(getContext(),
+                            "You have left one or more required fields empty. " +
+                                    "Please enter all information.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+
+                price = Double.parseDouble(priceString.toString());
+                if(price <= 0 ) {
+                    Toast.makeText(getContext(),
+                            "You have entered an invalid price",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                saveItem(currentUser);
+
+
+            }
+        });
+
+
+
+    }
+
+    private void saveItem(ParseUser currentUser) {
+        Item item = new Item();
+        item.setBrand(brand);
+        item.setCondition(condition);
+        item.setDescription(description);
+        item.setDisplayName(displayName);
+        item.setPhoto(new ParseFile(photoFile));
+        item.setItemType(type);
+        item.setPickupLocation(pickupLocation);
+        item.setSize(size);
+        item.setPrice(price);
+        item.setSeller(currentUser);
+        item.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e !=null) {
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(getContext(), "error while saving.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Log.i(TAG, "Item save was successful!");
+                binding.etDescription.setText("");
+                binding.ivItemImage.setImageResource(0);
+                binding.etItemName.setText("");
+                binding.etPrice.setText("");
+                binding.etBrand.setText("");
+                binding.etDescription.setText("");
+                binding.conditionSpinner.setSelection(0);
+                binding.itemSizeSpinner.setSelection(0);
+                binding.itemTypeSpinner.setSelection(0);
+            }
+        });
     }
 
 
