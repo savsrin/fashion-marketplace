@@ -66,20 +66,13 @@ public class CreateFragment extends Fragment {
 
     private FragmentCreateBinding binding;
     private AutocompleteSupportFragment autocompleteFragment;
-    private File photoFile;
-    private String displayName;
-    private String brand;
-    private String description;
+
     private String size;
     private String condition;
     private String type;
+    private File photoFile;
+    // this is cached after each submission
     private ParseGeoPoint pickupLocation;
-    private Double price;
-
-
-
-
-
 
 
 
@@ -279,9 +272,9 @@ public class CreateFragment extends Fragment {
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                description = binding.etDescription.getText().toString();
-                displayName = binding.etItemName.getText().toString();
-                brand = binding.etBrand.getText().toString();
+                String description = binding.etDescription.getText().toString();
+                String  displayName = binding.etItemName.getText().toString();
+                String brand = binding.etBrand.getText().toString();
                 String priceString = binding.etPrice.getText().toString();
 
 
@@ -301,9 +294,7 @@ public class CreateFragment extends Fragment {
                     return;
                 }
 
-
-
-                price = Double.parseDouble(priceString.toString());
+                Double price = Double.parseDouble(priceString.toString());
                 if(price <= 0 ) {
                     Toast.makeText(getContext(),
                             "You have entered an invalid price",
@@ -311,8 +302,21 @@ public class CreateFragment extends Fragment {
                     return;
                 }
 
+                if (photoFile == null || binding.ivItemImage.getDrawable() == null) {
+                    Toast.makeText(getContext(), "You must submit an image!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                saveItem(currentUser);
+
+
+
+                saveItem(currentUser,
+                        brand,
+                        description,
+                        displayName,
+                        price);
+
 
 
             }
@@ -322,7 +326,11 @@ public class CreateFragment extends Fragment {
 
     }
 
-    private void saveItem(ParseUser currentUser) {
+    private void saveItem(ParseUser currentUser,
+                          String brand,
+                          String description,
+                          String displayName,
+                          Double price) {
         Item item = new Item();
         item.setBrand(brand);
         item.setCondition(condition);
@@ -354,6 +362,12 @@ public class CreateFragment extends Fragment {
                 binding.itemTypeSpinner.setSelection(0);
             }
         });
+
+        // reset globals so that error checking for next submit works as expected
+        condition = "";
+        type = "";
+        size = "";
+        photoFile = null;
     }
 
 
