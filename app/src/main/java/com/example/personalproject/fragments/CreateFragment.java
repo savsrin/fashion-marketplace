@@ -57,24 +57,19 @@ import java.util.Arrays;
  */
 public class CreateFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     public static final String TAG = "CreateFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
-
-    public String photoFileName = "photo.jpg";
-    public String resizedFileName = "photo_resized.jpg";
+    public static final String photoFileName = "photo.jpg";
+    public static final String resizedFileName = "photo_resized.jpg";
 
     private FragmentCreateBinding binding;
     private AutocompleteSupportFragment autocompleteFragment;
-
     private String size;
     private String condition;
     private String type;
     private File photoFile;
     // this is cached after each submission
     private ParseGeoPoint pickupLocation;
-
-
 
     public CreateFragment() {
         // Required empty public constructor
@@ -85,11 +80,6 @@ public class CreateFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Places.initialize(getContext(), getString(R.string.google_maps_api_key));
         PlacesClient placesClient = Places.createClient(getContext());
-
-
-
-
-
     }
 
     @Override
@@ -97,70 +87,12 @@ public class CreateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
        binding = FragmentCreateBinding.inflate(getLayoutInflater());
-//       Spinner itemSizeSpinner = binding.itemSizeSpinner;
-
-//        ArrayAdapter<String> itemSizeAdapter = new ArrayAdapter<String>(
-//                getContext(),android.R.layout.simple_spinner_item, R.array.sizing_array);
-
-//        ArrayAdapter<CharSequence> itemSizeAdapter = new ArrayAdapter<CharSequence>(
-//                getContext(),android.R.layout.simple_spinner_item, R.array.sizing_array){
-//            @Override
-//            public boolean isEnabled(int position){
-//                if(position == 0)
-//                {
-//                    // Disable the first item from Spinner
-//                    // First item will be use for hint
-//                    return false;
-//                }
-//                else
-//                {
-//                    return true;
-//                }
-//            }
-//            @Override
-//            public View getDropDownView(int position, View convertView,
-//                                        ViewGroup parent) {
-//                View view = super.getDropDownView(position, convertView, parent);
-//                TextView tv = (TextView) view;
-//                if(position == 0){
-//                    // Set the hint text color gray
-//                    tv.setTextColor(Color.GRAY);
-//                }
-//                else {
-//                    tv.setTextColor(Color.BLACK);
-//                }
-//                return view;
-//            }
-//        };
-
-//                ArrayAdapter.createFromResource(getContext(),
-//                R.array.sizing_array, android.R.layout.simple_spinner_item);
-//        itemSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        itemSizeSpinner.setAdapter(itemSizeAdapter);
-//        itemSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (position > 0 ) {
-//                    Log.i(TAG, parent.getItemAtPosition(position).toString());
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                Log.i(TAG, "No item size selected");
-//
-//            }
-//        });
-
-        return binding.getRoot();
-
-
+       return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         // set up location autocomplete fragment
         autocompleteFragment = (AutocompleteSupportFragment)
@@ -188,19 +120,13 @@ public class CreateFragment extends Fragment {
                getContext().getResources().getStringArray(R.array.sizing_array)){
             @Override
             public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    // first item disabled; used as hint
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                // first item disabled; used as hint
+                return  position != 0;
             }
 
             @Override
-            public View getDropDownView(int position, View convertView,
+            public View getDropDownView(int position,
+                                        View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
@@ -234,8 +160,6 @@ public class CreateFragment extends Fragment {
             }
         });
 
-
-        
         Spinner itemConditionSpinner = binding.conditionSpinner;
         ArrayAdapter<CharSequence> itemConditionAdapter = new ArrayAdapter<CharSequence>(
                 getContext(),
@@ -243,15 +167,7 @@ public class CreateFragment extends Fragment {
                 getContext().getResources().getStringArray(R.array.condition_array)){
             @Override
             public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    // first item disabled; used as hint
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override
@@ -288,9 +204,6 @@ public class CreateFragment extends Fragment {
             }
         });
 
-
-
-
         Spinner itemTypeSpinner = binding.itemTypeSpinner;
         ArrayAdapter<CharSequence> itemTypeAdapter = new ArrayAdapter<CharSequence>(
                 getContext(),
@@ -298,15 +211,7 @@ public class CreateFragment extends Fragment {
                 getContext().getResources().getStringArray(R.array.item_type)){
             @Override
             public boolean isEnabled(int position){
-                if(position == 0)
-                {
-                    // first item disabled; used as hint
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override
@@ -344,8 +249,6 @@ public class CreateFragment extends Fragment {
             }
         });
 
-
-
         binding.btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -360,7 +263,6 @@ public class CreateFragment extends Fragment {
                 String  displayName = binding.etItemName.getText().toString();
                 String brand = binding.etBrand.getText().toString();
                 String priceString = binding.etPrice.getText().toString();
-
 
                 if (description.isEmpty()
                         || displayName.isEmpty()
@@ -378,7 +280,7 @@ public class CreateFragment extends Fragment {
                     return;
                 }
 
-                Double price = Double.parseDouble(priceString.toString());
+                Double price = Double.parseDouble(priceString);
                 if(price <= 0 ) {
                     Toast.makeText(getContext(),
                             "You have entered an invalid price",
@@ -392,22 +294,13 @@ public class CreateFragment extends Fragment {
                 }
 
                 ParseUser currentUser = ParseUser.getCurrentUser();
-
-
-
                 saveItem(currentUser,
                         brand,
                         description,
                         displayName,
                         price);
-
-
-
             }
         });
-
-
-
     }
 
     private void saveItem(ParseUser currentUser,
@@ -454,7 +347,6 @@ public class CreateFragment extends Fragment {
         photoFile = null;
     }
 
-
     private void launchCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Create a File reference for future access
@@ -470,13 +362,10 @@ public class CreateFragment extends Fragment {
 
     // Returns the File for a photo stored on disk given the fileName
     private File getPhotoFileUri(String photoFileName) {
-
         File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
-
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
             Log.d(TAG, "failed to create directory");
         }
-
         return new File(mediaStorageDir.getPath() + File.separator + photoFileName);
     }
 
@@ -537,6 +426,7 @@ public class CreateFragment extends Fragment {
         String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
         int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
         int rotationAngle = 0;
+        // TODO: add switch statement here
         if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
         if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
         if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
