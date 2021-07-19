@@ -1,4 +1,4 @@
-package com.example.personalproject.fragments;
+package com.example.personalproject;
 
 import android.graphics.Bitmap;
 
