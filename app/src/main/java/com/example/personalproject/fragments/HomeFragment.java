@@ -78,11 +78,9 @@ public class HomeFragment extends Fragment {
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
 
-
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -195,13 +193,8 @@ public class HomeFragment extends Fragment {
                 items.addAll(itemsFound);
                 adapter.notifyDataSetChanged();
                 Log.i(TAG, "finished querying posts");
-
             }
         });
-
-
-
-
     }
 
     LocationCallback locationCallback = new LocationCallback() {
