@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-// TODO: implement adapter
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.ViewHolder> {
     private List<Item> items;
     private Context context;
@@ -29,7 +28,6 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
         this.items = items;
         this.currentBuyerLocation = currentBuyerLocation;
     }
-
 
     @NonNull
     @Override
