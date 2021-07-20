@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Looper;
 import android.provider.Settings;
@@ -24,8 +25,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.personalproject.R;
+import com.example.personalproject.adapters.HomeItemsAdapter;
 import com.example.personalproject.databinding.FragmentCreateBinding;
 import com.example.personalproject.databinding.FragmentHomeBinding;
+import com.example.personalproject.models.Item;
+import com.example.personalproject.models.UserMeasurement;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -39,7 +43,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import permissions.dispatcher.RuntimePermissions;
 import permissions.dispatcher.NeedsPermission;
@@ -56,19 +68,13 @@ public class HomeFragment extends Fragment {
 
     public static final String TAG = "HomeFragment";
 
-
-    private FragmentHomeBinding binding;
-    private LocationRequest mLocationRequest;
     Location currentLocation;
     FusedLocationProviderClient client;
-
+    private List<Item> items;
+    private HomeItemsAdapter adapter;
+    private FragmentHomeBinding binding;
+    private LocationRequest mLocationRequest;
     private final static String KEY_LOCATION = "location";
-    /*
-     * Define a request code to send to Google Play services This code is
-     * returned in Activity.onActivityResult
-     */
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
 
@@ -81,13 +87,20 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.i(TAG, "Launching home fragment \n");
     }
 
     @Override
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION})
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "in on view created");
         super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
+            // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
+            // is not null.
+            currentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+        }
+        HomeFragmentPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
     }
 
     @Override
@@ -95,13 +108,6 @@ public class HomeFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
-        if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
-            // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
-            // is not null.
-            currentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            binding.tvLocation.setText(currentLocation.toString());
-        }
-
         HomeFragmentPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
         return binding.getRoot();
     }
@@ -125,23 +131,22 @@ public class HomeFragment extends Fragment {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-
     @Override
     public  void onStart() {
+        Log.i(TAG, "in on start");
         super.onStart();
     }
 
     @Override
     public void onStop() {
+        Log.i(TAG, "in on stop");
         super.onStop();
     }
 
     @Override
     public void onResume() {
+        Log.i(TAG, "in on resume");
         super.onResume();
-        if (currentLocation != null) {
-            binding.tvLocation.setText(currentLocation.toString());
-        }
         HomeFragmentPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
     }
 
@@ -152,16 +157,51 @@ public class HomeFragment extends Fragment {
         }
 
         currentLocation = location;
-        binding.tvLocation.setText(currentLocation.toString());
+        ParseGeoPoint buyerLocation = new ParseGeoPoint(
+                currentLocation.getLatitude(),
+                currentLocation.getLongitude());
+        items = new ArrayList<>();
+        adapter = new HomeItemsAdapter(getActivity(), items, buyerLocation);
+
+        binding.rvItemsHome.setAdapter(adapter);
+        binding.rvItemsHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         String msg = "Updated Location: " +
                 location.getLatitude() + "," +
                location.getLongitude();
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-        queryItems();
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "calling query items");
+        queryItems(buyerLocation);
     }
 
-    public void queryItems() {
-        // TODO: Implement
+    public void queryItems(ParseGeoPoint buyerLocation) {
+        // TODO: Finish Finalizing Parameters to Query By
+        ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
+        query.include(Item.KEY_SELLER);
+        query.whereWithinMiles("pickupLocation",buyerLocation, 20);
+        query.setLimit(5);
+        query.whereGreaterThanOrEqualTo("chest", 30);
+        query.findInBackground(new FindCallback<Item>() {
+            @Override
+            public void done(List<Item> itemsFound, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                for (Item item: itemsFound) {
+                    Log.i(TAG, "Item: " + item.getDescription() + "\n");
+                }
+                items.addAll(itemsFound);
+                adapter.notifyDataSetChanged();
+                Log.i(TAG, "finished querying posts");
+
+            }
+        });
+
+
+
+
     }
 
     LocationCallback locationCallback = new LocationCallback() {
