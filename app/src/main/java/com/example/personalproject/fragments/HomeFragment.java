@@ -174,12 +174,12 @@ public class HomeFragment extends Fragment {
         String msg = "Updated Location: " +
                 location.getLatitude() + "," +
                 location.getLongitude();
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        if (getActivity() != null) {
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        }
         Log.i(TAG, "calling query items");
         initQuery();
     }
-
-
 
     public void queryItems(ParseGeoPoint buyerLocation) {
         // TODO: Try querying by user measurement

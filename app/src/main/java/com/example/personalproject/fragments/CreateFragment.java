@@ -367,7 +367,6 @@ public class CreateFragment extends Fragment {
         return new File(mediaStorageDir.getPath() + File.separator + photoFileName);
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -405,8 +404,7 @@ public class CreateFragment extends Fragment {
         int minLength = Math.min(bitmap.getHeight(), bitmap.getWidth());
         return Bitmap.createBitmap(bitmap, 0, 0, minLength, minLength);
     }
-
-
+    
     private Bitmap rotateBitmapOrientation(String photoFilePath) {
         // Create and configure BitmapFactory
         BitmapFactory.Options bounds = new BitmapFactory.Options();

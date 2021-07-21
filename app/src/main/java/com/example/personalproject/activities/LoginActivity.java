@@ -36,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         // user can't go back to login screen
         finish();
     }
-
 
     private void loginUser (String username, String password){
         Log.i(TAG, "Attempting to login user " + username);

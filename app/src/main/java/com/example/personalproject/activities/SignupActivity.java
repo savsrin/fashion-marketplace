@@ -32,7 +32,6 @@ public class SignupActivity extends AppCompatActivity {
     String hip_measurement;
     UserMeasurement measurement;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +67,6 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 measurement = new UserMeasurement();
 
                 try {
@@ -98,7 +96,6 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-
     private void signupUser() {
         ParseUser user = new ParseUser();
         user.setUsername(username);
@@ -124,12 +121,10 @@ public class SignupActivity extends AppCompatActivity {
        });
     }
 
-
     private void goMainActivity() {
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         // user can't go back to signup screen
         finish();
     }
-
 }

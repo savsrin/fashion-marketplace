@@ -29,7 +29,6 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
     private Context context;
     private ParseGeoPoint currentBuyerLocation;
 
-
     public HomeItemsAdapter(Context context, List<Item> items) {
         this.context = context;
         this.items = items;
@@ -52,7 +51,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Item item = items.get(position);
+        Item item = itemsFiltered.get(position);
         holder.bind(item);
     }
 
@@ -66,7 +65,8 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                // TODO: there's a bug with filtering
+                // Currently supports filtering by brand
+                // TODO: Add more filtering options
                 String query = constraint.toString();
                 if (query.isEmpty()) {
                     itemsFiltered = items;
@@ -75,7 +75,10 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
                     for (Item item : items) {
                         if (item.getItemBrand().toLowerCase().contains(query.toLowerCase())) {
                             filteredList.add(item);
-                            Log.i("HomeAdapter", item.getDisplayName() + " " + item.getItemBrand());
+                            Log.i("HomeAdapter",
+                                    item.getDisplayName()
+                                    + " "
+                                    + item.getItemBrand());
                         }
                     }
                     itemsFiltered = filteredList;
