@@ -1,9 +1,12 @@
 package com.example.personalproject.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,16 +19,24 @@ import com.parse.ParseGeoPoint;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
-public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.ViewHolder> {
+public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.ViewHolder>
+        implements  Filterable{
     private List<Item> items;
+    private List<Item> itemsFiltered;
     private Context context;
     private ParseGeoPoint currentBuyerLocation;
 
-    public HomeItemsAdapter(Context context, List<Item> items, ParseGeoPoint currentBuyerLocation) {
+
+    public HomeItemsAdapter(Context context, List<Item> items) {
         this.context = context;
         this.items = items;
+        this.itemsFiltered = items;
+    }
+
+    public void setCurrentBuyerLocation(ParseGeoPoint currentBuyerLocation) {
         this.currentBuyerLocation = currentBuyerLocation;
     }
 
@@ -47,7 +58,39 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return itemsFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                // TODO: there's a bug with filtering
+                String query = constraint.toString();
+                if (query.isEmpty()) {
+                    itemsFiltered = items;
+                } else {
+                    List<Item> filteredList = new ArrayList<>();
+                    for (Item item : items) {
+                        if (item.getItemBrand().toLowerCase().contains(query.toLowerCase())) {
+                            filteredList.add(item);
+                            Log.i("HomeAdapter", item.getDisplayName() + " " + item.getItemBrand());
+                        }
+                    }
+                    itemsFiltered = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = itemsFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                itemsFiltered = (ArrayList<Item>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public static double round(double value, int places) {

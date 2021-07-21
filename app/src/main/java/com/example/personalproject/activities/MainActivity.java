@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -20,15 +21,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
-    final FragmentManager fragmentManager = getSupportFragmentManager();
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        final FragmentManager fragmentManager = getSupportFragmentManager();
         setContentView(binding.getRoot());
-
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -36,18 +37,23 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.action_home:
+                        Log.i(TAG, "action_home switch case \n");
                         fragment = new HomeFragment();
                         break;
                     case R.id.action_create:
+                        Log.i(TAG, "action_create switch case \n");
                         fragment = new CreateFragment();
                         break;
                     case R.id.action_dashboard:
+                        Log.i(TAG, "action_dashboard switch case \n");
                         fragment = new DashboardFragment();
                         break;
                     case R.id.action_profile:
-                    default:
+                        Log.i(TAG, "action_profile switch case \n");
                         fragment = new ProfileFragment();
                         break;
+                    default:
+                        fragment = new HomeFragment();
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
@@ -56,19 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Set default selection
         binding.bottomNavigationView.setSelectedItemId(R.id.action_home);
-        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
-
     }
 
-    private void logoutUser() {
-        ParseUser.logOut();
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
 }

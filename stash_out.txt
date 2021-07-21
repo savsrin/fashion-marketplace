@@ -1,0 +1,623 @@
+commit 3ccd8762fca364a3a5f4c41886a6aa024207a623
+Merge: 5d609e9 fc39103
+Author: savsrin <savsrin@gmail.com>
+Date:   Tue Jul 20 18:09:29 2021 -0700
+
+    WIP on master: 5d609e9 removed uneeded lines in HomeFragment
+
+diff --cc .gradle/6.7.1/executionHistory/executionHistory.bin
+index 381234f,381234f..a0d239f
+Binary files differ
+diff --cc .gradle/6.7.1/executionHistory/executionHistory.lock
+index a0faf9e,a0faf9e..ac4b4ee
+Binary files differ
+diff --cc .gradle/6.7.1/fileHashes/fileHashes.bin
+index af2951d,af2951d..4a4a0ab
+Binary files differ
+diff --cc .gradle/6.7.1/fileHashes/fileHashes.lock
+index a45e015,a45e015..4a90214
+Binary files differ
+diff --cc .gradle/6.7.1/fileHashes/resourceHashesCache.bin
+index c740759,c740759..c029a8c
+Binary files differ
+diff --cc .gradle/6.7.1/javaCompile/classAnalysis.bin
+index f038682,f038682..68eca95
+Binary files differ
+diff --cc .gradle/6.7.1/javaCompile/jarAnalysis.bin
+index 352765b,352765b..8341f2d
+Binary files differ
+diff --cc .gradle/6.7.1/javaCompile/javaCompile.lock
+index 04d6d1e,04d6d1e..c23fd12
+Binary files differ
+diff --cc .gradle/6.7.1/javaCompile/taskHistory.bin
+index d3995cd,d3995cd..fa34b8c
+Binary files differ
+diff --cc .gradle/buildOutputCleanup/buildOutputCleanup.lock
+index a02f34c,a02f34c..dc9482c
+Binary files differ
+diff --cc .gradle/buildOutputCleanup/outputFiles.bin
+index 3e556ef,3e556ef..c4cdab5
+Binary files differ
+diff --cc .gradle/checksums/checksums.lock
+index ae454ec,ae454ec..3a63e10
+Binary files differ
+diff --cc .gradle/checksums/md5-checksums.bin
+index 8d9cb9a,8d9cb9a..b061db8
+Binary files differ
+diff --cc .gradle/checksums/sha1-checksums.bin
+index 60b43bc,60b43bc..a89601e
+Binary files differ
+diff --cc .idea/gradle.xml
+index 440480e,440480e..5cd135a
+--- a/.idea/gradle.xml
++++ b/.idea/gradle.xml
+@@@ -1,5 -1,5 +1,6 @@@
+  <?xml version="1.0" encoding="UTF-8"?>
+  <project version="4">
+++  <component name="GradleMigrationSettings" migrationVersion="1" />
+    <component name="GradleSettings">
+      <option name="linkedExternalProjectsSettings">
+        <GradleProjectSettings>
+diff --cc .idea/modules/app/PersonalProject.app.iml
+index 7797fc5,7797fc5..93db170
+--- a/.idea/modules/app/PersonalProject.app.iml
++++ b/.idea/modules/app/PersonalProject.app.iml
+@@@ -68,13 -68,13 +68,18 @@@
+      <orderEntry type="library" name="Gradle: javax.inject:javax.inject:1" level="project" />
+      <orderEntry type="library" name="Gradle: com.google.auto.value:auto-value-annotations:1.6.2" level="project" />
+      <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.5" level="project" />
+++    <orderEntry type="library" name="Gradle: org.permissionsdispatcher:permissionsdispatcher-annotation:4.7.0" level="project" />
+++    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:disklrucache:4.12.0" level="project" />
+++    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:annotations:4.12.0" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.databinding:viewbinding:4.2.1@aar" level="project" />
+      <orderEntry type="library" name="Gradle: com.google.android.material:material:1.4.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout:2.0.4@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.3.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: com.github.parse-community.Parse-SDK-Android:parse:1.18.5@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-v4:1.0.0@aar" level="project" />
+++    <orderEntry type="library" name="Gradle: org.permissionsdispatcher:permissionsdispatcher:4.7.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: com.google.android.libraries.places:places:2.4.0@aar" level="project" />
+++    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:glide:4.12.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.viewpager2:viewpager2:1.0.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-extensions:2.1.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-location:17.0.0@aar" level="project" />
+@@@ -113,6 -113,6 +118,8 @@@
+      <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-backend-cct:2.3.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: com.google.android.datatransport:transport-runtime:2.2.3@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.versionedparcelable:versionedparcelable:1.1.1@aar" level="project" />
+++    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:gifdecoder:4.12.0@aar" level="project" />
+++    <orderEntry type="library" name="Gradle: androidx.exifinterface:exifinterface:1.2.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.3.1@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata:2.1.0@aar" level="project" />
+      <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.3.1@aar" level="project" />
+diff --cc app/build.gradle
+index 0a03f86,0a03f86..6c84129
+--- a/app/build.gradle
++++ b/app/build.gradle
+@@@ -31,6 -31,6 +31,10 @@@ android 
+  
+  }
+  
+++ext{
+++    permissionDispatcherVersion = "4.7.0"
+++}
+++
+  dependencies {
+  
+      implementation 'androidx.appcompat:appcompat:1.3.0'
+@@@ -47,5 -47,5 +51,10 @@@
+          }
+      }
+      implementation 'com.google.android.libraries.places:places:2.4.0'
+--
+++    implementation 'com.google.android.gms:play-services-location:17.0.0'
+++    implementation "org.permissionsdispatcher:permissionsdispatcher:$permissionDispatcherVersion"
+++    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:$permissionDispatcherVersion"
+++    implementation 'com.github.bumptech.glide:glide:4.12.0'
+++    // Glide v4 uses this new annotation processor -- see https://bumptech.github.io/glide/doc/generatedapi.html
+++    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+  }
+diff --cc app/src/main/AndroidManifest.xml
+index 56afaa4,56afaa4..1e1bf88
+--- a/app/src/main/AndroidManifest.xml
++++ b/app/src/main/AndroidManifest.xml
+@@@ -5,6 -5,6 +5,8 @@@
+  
+      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+      <uses-permission android:name="android.permission.INTERNET" />
+++    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+++    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  
+      <queries>
+  
+@@@ -22,6 -22,6 +24,7 @@@
+          android:roundIcon="@mipmap/ic_launcher_round"
+          android:supportsRtl="true"
+          android:theme="@style/Theme.PersonalProject">
+++        <activity android:name=".activities.SearchResultsActivity"></activity>
+  
+          <provider
+              android:name="androidx.core.content.FileProvider"
+@@@ -33,7 -33,7 +36,7 @@@
+                  android:resource="@xml/fileprovider" />
+          </provider>
+  
+--        <activity android:name=".activities.SignupActivity"></activity>
+++        <activity android:name=".activities.SignupActivity" />
+          <activity android:name=".activities.LoginActivity">
+              <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+diff --cc app/src/main/java/com/example/personalproject/.DS_Store
+index 193d1f1,193d1f1..523fbae
+Binary files differ
+diff --cc app/src/main/java/com/example/personalproject/activities/MainActivity.java
+index f7ed112,f7ed112..f7e8a0f
+--- a/app/src/main/java/com/example/personalproject/activities/MainActivity.java
++++ b/app/src/main/java/com/example/personalproject/activities/MainActivity.java
+@@@ -7,6 -7,6 +7,7 @@@ import androidx.fragment.app.FragmentMa
+  
+  import android.content.Intent;
+  import android.os.Bundle;
+++import android.util.Log;
+  import android.view.MenuItem;
+  import android.view.View;
+  
+@@@ -20,13 -20,13 +21,15 @@@ import com.google.android.material.bott
+  import com.parse.ParseUser;
+  
+  public class MainActivity extends AppCompatActivity {
+++    private static final String TAG = "MainActivity";
+      ActivityMainBinding binding;
+--    final FragmentManager fragmentManager = getSupportFragmentManager();
+++
+  
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+          binding = ActivityMainBinding.inflate(getLayoutInflater());
+++        final FragmentManager fragmentManager = getSupportFragmentManager();
+          setContentView(binding.getRoot());
+  
+  
+@@@ -36,18 -36,18 +39,23 @@@
+                  Fragment fragment;
+                  switch (item.getItemId()) {
+                      case R.id.action_home:
+++                        Log.i(TAG, "action_home switch case \n");
+                          fragment = new HomeFragment();
+                          break;
+                      case R.id.action_create:
+++                        Log.i(TAG, "action_create switch case \n");
+                          fragment = new CreateFragment();
+                          break;
+                      case R.id.action_dashboard:
+++                        Log.i(TAG, "action_dashboard switch case \n");
+                          fragment = new DashboardFragment();
+                          break;
+                      case R.id.action_profile:
+--                    default:
+++                        Log.i(TAG, "action_profile switch case \n");
+                          fragment = new ProfileFragment();
+                          break;
+++                    default:
+++                        fragment = new HomeFragment();
+                  }
+                  fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                  return true;
+@@@ -56,13 -56,13 +64,6 @@@
+  
+          // Set default selection
+          binding.bottomNavigationView.setSelectedItemId(R.id.action_home);
+--        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
+--            @Override
+--            public void onClick(View v) {
+--                logoutUser();
+--            }
+--        });
+--
+      }
+  
+      private void logoutUser() {
+diff --cc app/src/main/java/com/example/personalproject/activities/SearchResultsActivity.java
+index ef2c300,ef2c300..18b2b58
+--- a/app/src/main/java/com/example/personalproject/activities/SearchResultsActivity.java
++++ b/app/src/main/java/com/example/personalproject/activities/SearchResultsActivity.java
+@@@ -9,6 -9,6 +9,5 @@@ public class SearchResultsActivity exte
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+--        setContentView(R.layout.activity_search_results);
+      }
+  }
+diff --cc app/src/main/java/com/example/personalproject/adapters/HomeItemsAdapter.java
+index 337166c,337166c..6555a55
+--- a/app/src/main/java/com/example/personalproject/adapters/HomeItemsAdapter.java
++++ b/app/src/main/java/com/example/personalproject/adapters/HomeItemsAdapter.java
+@@@ -4,6 -4,6 +4,8 @@@ import android.content.Context
+  import android.view.LayoutInflater;
+  import android.view.View;
+  import android.view.ViewGroup;
+++import android.widget.Filter;
+++import android.widget.Filterable;
+  
+  import androidx.annotation.NonNull;
+  import androidx.recyclerview.widget.RecyclerView;
+@@@ -16,6 -16,6 +18,7 @@@ import com.parse.ParseGeoPoint
+  
+  import java.math.BigDecimal;
+  import java.math.RoundingMode;
+++import java.util.ArrayList;
+  import java.util.List;
+  
+  public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.ViewHolder> {
+@@@ -23,9 -23,9 +26,11 @@@
+      private Context context;
+      private ParseGeoPoint currentBuyerLocation;
+  
+++
+      public HomeItemsAdapter(Context context, List<Item> items, ParseGeoPoint currentBuyerLocation) {
+          this.context = context;
+          this.items = items;
+++       // this.itemsFiltered = items;
+          this.currentBuyerLocation = currentBuyerLocation;
+      }
+  
+diff --cc app/src/main/java/com/example/personalproject/fragments/CreateFragment.java
+index ae8d8ab,ae8d8ab..8121fa9
+--- a/app/src/main/java/com/example/personalproject/fragments/CreateFragment.java
++++ b/app/src/main/java/com/example/personalproject/fragments/CreateFragment.java
+@@@ -13,7 -13,7 +13,6 @@@ import androidx.annotation.NonNull
+  import androidx.annotation.Nullable;
+  import androidx.core.content.FileProvider;
+  import androidx.fragment.app.Fragment;
+--import androidx.fragment.app.FragmentManager;
+  
+  import android.os.Environment;
+  import android.provider.MediaStore;
+@@@ -23,13 -23,13 +22,12 @@@ import android.view.View
+  import android.view.ViewGroup;
+  import android.widget.AdapterView;
+  import android.widget.ArrayAdapter;
+--import android.widget.ImageView;
+  import android.widget.Spinner;
+  import android.widget.TextView;
+  import android.widget.Toast;
+  
+++import com.example.personalproject.BitmapScaler;
+  import com.example.personalproject.R;
+--import com.example.personalproject.activities.SignupActivity;
+  import com.example.personalproject.databinding.FragmentCreateBinding;
+  import com.example.personalproject.models.Item;
+  import com.google.android.gms.common.api.Status;
+@@@ -38,7 -38,7 +36,6 @@@ import com.google.android.libraries.pla
+  import com.google.android.libraries.places.api.net.PlacesClient;
+  import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+  import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+--import com.parse.Parse;
+  import com.parse.ParseException;
+  import com.parse.ParseFile;
+  import com.parse.ParseGeoPoint;
+@@@ -77,6 -77,6 +74,7 @@@ public class CreateFragment extends Fra
+  
+      @Override
+      public void onCreate(@Nullable Bundle savedInstanceState) {
+++        Log.i(TAG, "Launching on create fragment \n");
+          super.onCreate(savedInstanceState);
+          Places.initialize(getContext(), getString(R.string.google_maps_api_key));
+          PlacesClient placesClient = Places.createClient(getContext());
+diff --cc app/src/main/java/com/example/personalproject/fragments/DashboardFragment.java
+index 3d9c222,3d9c222..0744757
+--- a/app/src/main/java/com/example/personalproject/fragments/DashboardFragment.java
++++ b/app/src/main/java/com/example/personalproject/fragments/DashboardFragment.java
+@@@ -2,8 -2,8 +2,10 @@@ package com.example.personalproject.fra
+  
+  import android.os.Bundle;
+  
+++import androidx.annotation.NonNull;
+  import androidx.fragment.app.Fragment;
+  
+++import android.util.Log;
+  import android.view.LayoutInflater;
+  import android.view.View;
+  import android.view.ViewGroup;
+@@@ -44,8 -44,8 +46,14 @@@ public class DashboardFragment extends 
+          return fragment;
+      }
+  
+++    @Override
+++    public void onSaveInstanceState(@NonNull Bundle outState) {
+++        super.onSaveInstanceState(outState);
+++    }
+++
+      @Override
+      public void onCreate(Bundle savedInstanceState) {
+++        Log.i("DashboardFragment", "Launching on create fragment \n");
+          super.onCreate(savedInstanceState);
+          if (getArguments() != null) {
+              mParam1 = getArguments().getString(ARG_PARAM1);
+diff --cc app/src/main/java/com/example/personalproject/fragments/HomeFragment.java
+index 7bc70b4,7bc70b4..049fd3a
+--- a/app/src/main/java/com/example/personalproject/fragments/HomeFragment.java
++++ b/app/src/main/java/com/example/personalproject/fragments/HomeFragment.java
+@@@ -22,6 -22,6 +22,7 @@@ import android.util.Log
+  import android.view.LayoutInflater;
+  import android.view.View;
+  import android.view.ViewGroup;
+++import android.widget.SearchView;
+  import android.widget.Toast;
+  
+  import com.example.personalproject.R;
+@@@ -164,11 -164,11 +165,11 @@@ public class HomeFragment extends Fragm
+          binding.rvItemsHome.setAdapter(adapter);
+          binding.rvItemsHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+  
+--        String msg = "Updated Location: " +
+--                location.getLatitude() + "," +
+--               location.getLongitude();
+--        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+--        Log.i(TAG, "calling query items");
+++//        String msg = "Updated Location: " +
+++//                location.getLatitude() + "," +
+++//               location.getLongitude();
+++//        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+++//        Log.i(TAG, "calling query items");
+          queryItems(buyerLocation);
+      }
+  
+diff --cc app/src/main/java/com/example/personalproject/fragments/ProfileFragment.java
+index 51fa1b7,51fa1b7..d7b62f4
+--- a/app/src/main/java/com/example/personalproject/fragments/ProfileFragment.java
++++ b/app/src/main/java/com/example/personalproject/fragments/ProfileFragment.java
+@@@ -1,14 -1,14 +1,22 @@@
+  package com.example.personalproject.fragments;
+  
+++import android.content.Intent;
+  import android.os.Bundle;
+  
+++import androidx.annotation.NonNull;
+++import androidx.annotation.Nullable;
+  import androidx.fragment.app.Fragment;
+  
+++import android.util.Log;
+  import android.view.LayoutInflater;
+  import android.view.View;
+  import android.view.ViewGroup;
+  
+  import com.example.personalproject.R;
+++import com.example.personalproject.activities.LoginActivity;
+++import com.example.personalproject.activities.MainActivity;
+++import com.example.personalproject.databinding.FragmentProfileBinding;
+++import com.parse.ParseUser;
+  
+  /**
+   * A simple {@link Fragment} subclass.
+@@@ -17,50 -17,50 +25,43 @@@
+   */
+  public class ProfileFragment extends Fragment {
+  
+--    // TODO: Rename parameter arguments, choose names that match
+--    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+--    private static final String ARG_PARAM1 = "param1";
+--    private static final String ARG_PARAM2 = "param2";
+++    public static final String TAG = "ProfileFragment";
+  
+--    // TODO: Rename and change types of parameters
+--    private String mParam1;
+--    private String mParam2;
+++    private FragmentProfileBinding binding;
+  
+      public ProfileFragment() {
+          // Required empty public constructor
+      }
+  
+--    /**
+--     * Use this factory method to create a new instance of
+--     * this fragment using the provided parameters.
+--     *
+--     * @param param1 Parameter 1.
+--     * @param param2 Parameter 2.
+--     * @return A new instance of fragment ProfileFragment.
+--     */
+--    // TODO: Rename and change types and number of parameters
+--    public static ProfileFragment newInstance(String param1, String param2) {
+--        ProfileFragment fragment = new ProfileFragment();
+--        Bundle args = new Bundle();
+--        args.putString(ARG_PARAM1, param1);
+--        args.putString(ARG_PARAM2, param2);
+--        fragment.setArguments(args);
+--        return fragment;
+--    }
+--
+      @Override
+      public void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+--        if (getArguments() != null) {
+--            mParam1 = getArguments().getString(ARG_PARAM1);
+--            mParam2 = getArguments().getString(ARG_PARAM2);
+--        }
+++        Log.i(TAG, "Launching profile fragment \n");
+      }
+  
+      @Override
+      public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                               Bundle savedInstanceState) {
+          // Inflate the layout for this fragment
+--        return inflater.inflate(R.layout.fragment_profile, container, false);
+++        binding = FragmentProfileBinding.inflate(getLayoutInflater());
+++        return binding.getRoot();
+++    }
+++
+++    @Override
+++    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+++        super.onViewCreated(view, savedInstanceState);
+++        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
+++            @Override
+++            public void onClick(View v) {
+++                logoutUser();
+++            }
+++        });
+++    }
+++
+++    private void logoutUser() {
+++        ParseUser.logOut();
+++        Intent intent = new Intent(getContext(), LoginActivity.class);
+++        startActivity(intent);
+++        getActivity().finish();
+      }
+  }
+diff --cc app/src/main/java/com/example/personalproject/models/Item.java
+index f00eea5,f00eea5..99d28e5
+--- a/app/src/main/java/com/example/personalproject/models/Item.java
++++ b/app/src/main/java/com/example/personalproject/models/Item.java
+@@@ -30,7 -30,7 +30,6 @@@ public class Item extends ParseObject 
+      public ParseFile getPhoto() {return getParseFile(KEY_PHOTO);}
+      public ParseUser getSeller() {return getParseUser(KEY_SELLER);}
+  
+--
+      public void setDescription(String description) {put(KEY_DESCRIPTION, description );}
+      public void setSize(String size) {put(KEY_SIZE, size);}
+      public void setDisplayName(String displayName) {put(KEY_DISPLAY, displayName);}
+@@@ -41,12 -41,12 +40,4 @@@
+      public void setBrand(String brand) {put(KEY_BRAND, brand);}
+      public void setPhoto(ParseFile parseFile) { put(KEY_PHOTO, parseFile);}
+      public void setSeller(ParseUser seller) { put(KEY_SELLER,seller); }
+--
+--
+--
+--
+--
+--
+--
+--
+  }
+diff --cc app/src/main/res/layout/activity_main.xml
+index e4b0eb9,e4b0eb9..0a281a8
+--- a/app/src/main/res/layout/activity_main.xml
++++ b/app/src/main/res/layout/activity_main.xml
+@@@ -6,8 -6,8 +6,6 @@@
+      android:layout_height="match_parent"
+      tools:context=".activities.MainActivity">
+  
+--
+--
+      <FrameLayout
+          android:id="@+id/flContainer"
+          android:layout_width="match_parent"
+@@@ -21,17 -21,17 +19,4 @@@
+          app:menu="@menu/menu_bottom_navigation"
+          android:layout_alignParentBottom="true" />
+  
+--
+--    <Button
+--        android:id="@+id/btnLogout"
+--        android:layout_width="wrap_content"
+--        android:layout_height="wrap_content"
+--        android:layout_alignParentEnd="true"
+--        android:layout_alignParentBottom="true"
+--        android:layout_marginEnd="2dp"
+--        android:layout_marginBottom="0dp"
+--        android:backgroundTint="#AEA8A8"
+--        android:text="Logout" />
+--
+--
+  </RelativeLayout>
+diff --cc app/src/main/res/layout/fragment_home.xml
+index 5194fda,5194fda..52ca014
+--- a/app/src/main/res/layout/fragment_home.xml
++++ b/app/src/main/res/layout/fragment_home.xml
+@@@ -1,14 -1,14 +1,26 @@@
+  <?xml version="1.0" encoding="utf-8"?>
+--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+++    android:layout_margin="16dp"
+++    android:orientation="vertical"
+      tools:context=".fragments.HomeFragment">
+  
+--    <!-- TODO: Update blank fragment layout -->
+--    <TextView
+++    <SearchView
+++        android:layout_width="match_parent"
+++        android:layout_height="wrap_content"
+++        android:id="@+id/svItemHome"
+++        android:iconifiedByDefault="false"
+++       />
+++
+++
+++    <androidx.recyclerview.widget.RecyclerView
+++        android:id="@+id/rvItemsHome"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+--        android:text="@string/hello_blank_fragment" />
+++        android:layout_centerInParent="true"
+++        android:layout_below="@id/svItemHome"
+++        android:padding="8dp" />
+  
+--</FrameLayout>
+++</RelativeLayout>
+diff --cc app/src/main/res/layout/fragment_profile.xml
+index 7280f8e,7280f8e..2e7ace9
+--- a/app/src/main/res/layout/fragment_profile.xml
++++ b/app/src/main/res/layout/fragment_profile.xml
+@@@ -1,5 -1,5 +1,5 @@@
+  <?xml version="1.0" encoding="utf-8"?>
+--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+@@@ -11,4 -11,4 +11,16 @@@
+          android:layout_height="match_parent"
+          android:text="@string/hello_blank_fragment" />
+  
+--</FrameLayout>
+++
+++    <Button
+++        android:id="@+id/btnLogout"
+++        android:layout_width="wrap_content"
+++        android:layout_height="wrap_content"
+++        android:layout_alignParentEnd="true"
+++        android:layout_alignParentBottom="true"
+++        android:layout_marginEnd="2dp"
+++        android:layout_marginBottom="0dp"
+++        android:backgroundTint="#AEA8A8"
+++        android:text="Logout" />
+++
+++</RelativeLayout>
+diff --cc app/src/main/res/values/strings.xml
+index 51853b2,51853b2..4cfc99e
+--- a/app/src/main/res/values/strings.xml
++++ b/app/src/main/res/values/strings.xml
+@@@ -6,7 -6,7 +6,7 @@@
+      <string name="hip_inches">Hip "</string>
+      <string name="weight_lb">Weight(lb)</string>
+      <!-- TODO: Remove or change this placeholder text -->
+--    <string name="hello_blank_fragment">Hello blank fragment</string>
+++    <string name="hello_blank_fragment">Hello blank fragment new</string>
+  
+      <string-array name="condition_array">
+          <item> Select an item condition..</item>
+@@@ -21,14 -21,14 +21,14 @@@
+      <string-array name="sizing_array">
+          <item> Select an item size..</item>
+          <item>XXS</item>
+--    <item>XS</item>
+--    <item>S</item>
+--    <item>M</item>
+--    <item>L</item>
+--    <item>XL</item>
+--    <item>XXL</item>
+++        <item>XS</item>
+++        <item>S</item>
+++        <item>M</item>
+++        <item>L</item>
+++        <item>XL</item>
+++        <item>XXL</item>
+          <item>XXXL</item>
+--</string-array>
+++    </string-array>
+  
+      <string-array name="item_type">
+          <item> Select an item type..</item>

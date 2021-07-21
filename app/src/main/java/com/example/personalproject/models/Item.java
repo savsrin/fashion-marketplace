@@ -30,7 +30,6 @@ public class Item extends ParseObject {
     public ParseFile getPhoto() {return getParseFile(KEY_PHOTO);}
     public ParseUser getSeller() {return getParseUser(KEY_SELLER);}
 
-
     public void setDescription(String description) {put(KEY_DESCRIPTION, description );}
     public void setSize(String size) {put(KEY_SIZE, size);}
     public void setDisplayName(String displayName) {put(KEY_DISPLAY, displayName);}
@@ -41,12 +40,4 @@ public class Item extends ParseObject {
     public void setBrand(String brand) {put(KEY_BRAND, brand);}
     public void setPhoto(ParseFile parseFile) { put(KEY_PHOTO, parseFile);}
     public void setSeller(ParseUser seller) { put(KEY_SELLER,seller); }
-
-
-
-
-
-
-
-
 }

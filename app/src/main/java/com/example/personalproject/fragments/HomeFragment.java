@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.personalproject.R;
@@ -70,7 +71,7 @@ public class HomeFragment extends Fragment {
 
     Location currentLocation;
     FusedLocationProviderClient client;
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();;
     private HomeItemsAdapter adapter;
     private FragmentHomeBinding binding;
     private LocationRequest mLocationRequest;
@@ -94,11 +95,12 @@ public class HomeFragment extends Fragment {
         Log.i(TAG, "in on view created");
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
+            Log.i(TAG, "using saved instance state");
             // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
             // is not null.
             currentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            initQuery();
         }
-        HomeFragmentPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
     }
 
     @Override
@@ -106,7 +108,10 @@ public class HomeFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
-        HomeFragmentPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
+        adapter = new HomeItemsAdapter(getActivity(), items);
+        binding.rvItemsHome.setAdapter(adapter);
+        binding.rvItemsHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+        initSearchWidget();
         return binding.getRoot();
     }
 
@@ -125,8 +130,14 @@ public class HomeFragment extends Fragment {
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        Log.i(TAG, "in on save instance state");
         savedInstanceState.putParcelable(KEY_LOCATION, currentLocation);
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 
     @Override
@@ -145,40 +156,37 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         Log.i(TAG, "in on resume");
         super.onResume();
-        HomeFragmentPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
+        if (currentLocation != null ) {
+            Log.i(TAG, "using cached value of location");
+            initQuery();
+        } else {
+            HomeFragmentPermissionsDispatcher.startLocationUpdatesWithPermissionCheck(this);
+        }
     }
 
     public void onLocationChanged(Location location) {
         // GPS may be turned off
         if (location == null) {
+            Log.i(TAG, "Location is null.");
             return;
         }
-
         currentLocation = location;
-        ParseGeoPoint buyerLocation = new ParseGeoPoint(
-                currentLocation.getLatitude(),
-                currentLocation.getLongitude());
-        items = new ArrayList<>();
-        adapter = new HomeItemsAdapter(getActivity(), items, buyerLocation);
-
-        binding.rvItemsHome.setAdapter(adapter);
-        binding.rvItemsHome.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         String msg = "Updated Location: " +
                 location.getLatitude() + "," +
-               location.getLongitude();
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+                location.getLongitude();
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "calling query items");
-        queryItems(buyerLocation);
+        initQuery();
     }
 
+
+
     public void queryItems(ParseGeoPoint buyerLocation) {
-        // TODO: Finish Finalizing Parameters to Query By
+        // TODO: Try querying by user measurement
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.include(Item.KEY_SELLER);
         query.whereWithinMiles("pickupLocation",buyerLocation, 20);
         query.setLimit(5);
-        query.whereGreaterThanOrEqualTo("chest", 30);
         query.findInBackground(new FindCallback<Item>() {
             @Override
             public void done(List<Item> itemsFound, ParseException e) {
@@ -200,6 +208,11 @@ public class HomeFragment extends Fragment {
     LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
+            if (locationResult == null) {
+                Log.i(TAG, "Location Result is null");
+                return;
+            }
+            Log.i(TAG, locationResult.toString());
             onLocationChanged(locationResult.getLastLocation());
             if (locationResult.getLastLocation() != null ) {
                 getFusedLocationProviderClient(getActivity()).removeLocationUpdates(locationCallback);
@@ -224,6 +237,35 @@ public class HomeFragment extends Fragment {
         //noinspection MissingPermission
         getFusedLocationProviderClient(getActivity()).requestLocationUpdates(mLocationRequest, locationCallback,
                 Looper.myLooper());
+    }
+
+    private void initQuery() {
+        ParseGeoPoint buyerLocation = new ParseGeoPoint(
+                currentLocation.getLatitude(),
+                currentLocation.getLongitude());
+        adapter.setCurrentBuyerLocation(buyerLocation);
+        Log.i(TAG, "calling query items");
+        queryItems(buyerLocation);
+    }
+
+
+    private void initSearchWidget() {
+        binding.svItemHome.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                /* note: the tutorial had the following line,
+                but I removed it while debugging since it results in an
+                incomplete query */
+                //adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 }
 

@@ -6,7 +6,7 @@
     <string name="hip_inches">Hip "</string>
     <string name="weight_lb">Weight(lb)</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello blank fragment new</string>
 
     <string-array name="condition_array">
         <item> Select an item condition..</item>
@@ -21,14 +21,14 @@
     <string-array name="sizing_array">
         <item> Select an item size..</item>
         <item>XXS</item>
-    <item>XS</item>
-    <item>S</item>
-    <item>M</item>
-    <item>L</item>
-    <item>XL</item>
-    <item>XXL</item>
+        <item>XS</item>
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+        <item>XXL</item>
         <item>XXXL</item>
-</string-array>
+    </string-array>
 
     <string-array name="item_type">
         <item> Select an item type..</item>

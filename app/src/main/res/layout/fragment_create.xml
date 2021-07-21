@@ -128,7 +128,4 @@
         android:layout_below="@id/itemTypeSpinner"
         android:text="Publish" />
 
-
-
-
 </RelativeLayout>

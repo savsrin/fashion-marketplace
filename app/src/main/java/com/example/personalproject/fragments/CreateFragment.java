@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,13 +22,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.personalproject.BitmapScaler;
 import com.example.personalproject.R;
-import com.example.personalproject.activities.SignupActivity;
 import com.example.personalproject.databinding.FragmentCreateBinding;
 import com.example.personalproject.models.Item;
 import com.google.android.gms.common.api.Status;
@@ -38,7 +36,6 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -77,6 +74,7 @@ public class CreateFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "Launching on create fragment \n");
         super.onCreate(savedInstanceState);
         Places.initialize(getContext(), getString(R.string.google_maps_api_key));
         PlacesClient placesClient = Places.createClient(getContext());
