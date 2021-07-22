@@ -73,7 +73,9 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
                 } else {
                     List<Item> filteredList = new ArrayList<>();
                     for (Item item : items) {
-                        if (item.getItemBrand().toLowerCase().contains(query.toLowerCase())) {
+                        if (item.getItemBrand().toLowerCase().contains(query.toLowerCase())
+                            || item.getItemType().toLowerCase().contains(query.toLowerCase())
+                            || item.getCondition().toLowerCase().contains(query.toLowerCase()) ) {
                             filteredList.add(item);
                             Log.i("HomeAdapter",
                                     item.getDisplayName()
