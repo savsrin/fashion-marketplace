@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.ViewHolder>
-        implements  Filterable{
+                                                                implements  Filterable {
     private List<Item> items;
     private List<Item> itemsFiltered;
     private Context context;
@@ -65,22 +65,18 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                // Currently supports filtering by brand
-                // TODO: Add more filtering options
-                String query = constraint.toString();
+                String query = constraint.toString().toLowerCase().trim();
                 if (query.isEmpty()) {
                     itemsFiltered = items;
                 } else {
                     List<Item> filteredList = new ArrayList<>();
                     for (Item item : items) {
-                        if (item.getItemBrand().toLowerCase().contains(query.toLowerCase())
-                            || item.getItemType().toLowerCase().contains(query.toLowerCase())
-                            || item.getCondition().toLowerCase().contains(query.toLowerCase()) ) {
+                        if (item.getItemBrand().toLowerCase().contains(query)
+                            || item.getItemType().toLowerCase().contains(query)
+                            || item.getCondition().toLowerCase().contains(query)
+                            || item.getDescription().toLowerCase().contains(query)
+                            || item.getDisplayName().toLowerCase().contains(query)) {
                             filteredList.add(item);
-                            Log.i("HomeAdapter",
-                                    item.getDisplayName()
-                                    + " "
-                                    + item.getItemBrand());
                         }
                     }
                     itemsFiltered = filteredList;
@@ -121,14 +117,16 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
             itemClothingBinding.tvSizeRV.setText(item.getSize());
             itemClothingBinding.tvTypeRV.setText(item.getItemType());
             itemClothingBinding.tvBrandRV.setText("Brand: " + item.getItemBrand());
-            itemClothingBinding.tvSellerNameRV.setText("Seller: @"  + item.getSeller().getUsername());
+            itemClothingBinding.tvSellerNameRV.setText("Seller: @"
+                                                        + item.getSeller().getUsername());
 
             ParseFile image = item.getPhoto();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(itemClothingBinding.ivItemImageRV);
             }
 
-            Double distanceToSeller = item.getPickupLocation().distanceInMilesTo(currentBuyerLocation);
+            Double distanceToSeller = item.getPickupLocation()
+                                            .distanceInMilesTo(currentBuyerLocation);
             distanceToSeller = round(distanceToSeller, 2);
             itemClothingBinding.tvSellerDistanceRV.setText(distanceToSeller.toString() + " miles");
         }

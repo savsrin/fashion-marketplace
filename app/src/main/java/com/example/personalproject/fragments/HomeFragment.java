@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -45,10 +46,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 
 import java.util.ArrayList;
@@ -78,6 +82,7 @@ public class HomeFragment extends Fragment {
     private final static String KEY_LOCATION = "location";
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
+    boolean filterMeasurement = false;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -90,20 +95,6 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION})
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "in on view created");
-        super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
-            Log.i(TAG, "using saved instance state");
-            // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
-            // is not null.
-            currentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            initQuery();
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
@@ -113,6 +104,32 @@ public class HomeFragment extends Fragment {
         binding.rvItemsHome.setLayoutManager(new LinearLayoutManager(getActivity()));
         initSearchWidget();
         return binding.getRoot();
+    }
+
+    @Override
+    @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION})
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "in on view created");
+        super.onViewCreated(view, savedInstanceState);
+        binding.cbFilterMeasurement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                filterMeasurement = !filterMeasurement;
+               if (currentLocation != null) {
+                    initQuery();
+                } else {
+                    HomeFragmentPermissionsDispatcher
+                            .startLocationUpdatesWithPermissionCheck(HomeFragment.this);
+                }
+            }
+        });
+        if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
+            Log.i(TAG, "using saved instance state");
+            // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
+            // is not null.
+            currentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+            initQuery();
+        }
     }
 
     @Override
@@ -181,23 +198,47 @@ public class HomeFragment extends Fragment {
         initQuery();
     }
 
-    public void queryItems(ParseGeoPoint buyerLocation) {
-        // TODO: Try querying by user measurement
+    public void queryItems(ParseGeoPoint buyerLocation,
+                           UserMeasurement buyerMeasurement) {
+
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.include(Item.KEY_SELLER);
+
+        if (filterMeasurement) {
+            // return items with sellers who have measurements within a small radius of the buyer's
+            ParseQuery<UserMeasurement> measurementQuery = ParseQuery.getQuery(UserMeasurement.class);
+            measurementQuery.whereGreaterThanOrEqualTo("chest", buyerMeasurement.getChest() - 2);
+            measurementQuery.whereLessThanOrEqualTo("chest", buyerMeasurement.getChest() + 2);
+            measurementQuery.whereGreaterThanOrEqualTo("waist", buyerMeasurement.getWaist() - 2);
+            measurementQuery.whereLessThanOrEqualTo("waist", buyerMeasurement.getWaist() + 2);
+            measurementQuery.whereGreaterThanOrEqualTo("hip", buyerMeasurement.getHip() - 2);
+            measurementQuery.whereLessThanOrEqualTo("hip", buyerMeasurement.getHip() + 2);
+            measurementQuery.whereGreaterThanOrEqualTo("height", buyerMeasurement.getHeight() - 3);
+            measurementQuery.whereLessThanOrEqualTo("height", buyerMeasurement.getHeight() + 3);
+            measurementQuery.whereGreaterThanOrEqualTo("weight", buyerMeasurement.getWeight() - 5);
+            measurementQuery.whereLessThanOrEqualTo("weight", buyerMeasurement.getWeight() + 5);
+
+            ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
+            userQuery.include("measurement");
+            userQuery.whereMatchesQuery("measurement", measurementQuery);
+
+            query.whereMatchesQuery("seller", userQuery);
+        }
+
         query.whereWithinMiles("pickupLocation",buyerLocation, 20);
-        query.setLimit(5);
+        query.setLimit(10);
         query.findInBackground(new FindCallback<Item>() {
             @Override
             public void done(List<Item> itemsFound, ParseException e) {
                 // check for errors
                 if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
+                    Log.e(TAG, "Issue with getting items", e);
                     return;
                 }
                 for (Item item: itemsFound) {
                     Log.i(TAG, "Item: " + item.getDescription() + "\n");
                 }
+                items.clear(); // TODO: add check for pagination and don't clear in that case
                 items.addAll(itemsFound);
                 adapter.notifyDataSetChanged();
                 Log.i(TAG, "finished querying posts");
@@ -219,7 +260,6 @@ public class HomeFragment extends Fragment {
             }
         }
     };
-
 
     @NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION})
     protected void startLocationUpdates() {
@@ -244,10 +284,17 @@ public class HomeFragment extends Fragment {
                 currentLocation.getLatitude(),
                 currentLocation.getLongitude());
         adapter.setCurrentBuyerLocation(buyerLocation);
-        Log.i(TAG, "calling query items");
-        queryItems(buyerLocation);
-    }
+        ParseUser user = ParseUser.getCurrentUser();
 
+        user.getParseObject("measurement").fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+                UserMeasurement buyerMeasurement = (UserMeasurement) object;
+                Log.i(TAG, "calling query items");
+                queryItems(buyerLocation, buyerMeasurement);
+            }
+        });
+    }
 
     private void initSearchWidget() {
         binding.svItemHome.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -259,10 +306,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                /* note: the tutorial had the following line,
-                but I removed it while debugging since it results in an
-                incomplete query */
-                //adapter.getFilter().filter(newText);
+                adapter.getFilter().filter(newText);
                 return false;
             }
         });
