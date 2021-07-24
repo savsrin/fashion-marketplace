@@ -15,6 +15,7 @@ public class Transaction extends ParseObject {
     public static final String KEY_BUYER_PHONE = "buyerPhone";
     public static final String KEY_PAID = "paid";
     public static final String KEY_DELIVERED = "delivered";
+    public static final String KEY_CONTACTED = "buyerContacted";
 
     public Date getPickupTime () {return getDate(KEY_PICKUP_TIME);}
     public ParseUser getBuyer () {return getParseUser(KEY_BUYER);}
@@ -23,6 +24,7 @@ public class Transaction extends ParseObject {
     public String getBuyerPhone () { return getString(KEY_BUYER_PHONE);}
     public Boolean isPaid () { return getBoolean(KEY_PAID);}
     public Boolean isDelivered () { return getBoolean(KEY_DELIVERED);}
+    public Boolean isBuyerContacted () { return getBoolean(KEY_CONTACTED);}
 
     public void setPickupTime(Date time) { put(KEY_PICKUP_TIME, time);}
     public void setBuyer(ParseUser buyer) { put(KEY_BUYER, buyer);}
@@ -30,5 +32,6 @@ public class Transaction extends ParseObject {
     public void setBuyerEmail(String email) { put(KEY_BUYER_EMAIL, email);}
     public void setPaymentStatus(Boolean paid) { put(KEY_PAID, paid);}
     public void setDeliveryStatus(Boolean delivered) { put(KEY_PAID, delivered);}
+    public void setContactedStatus(Boolean contacted) { put(KEY_CONTACTED, contacted);}
 
 }
