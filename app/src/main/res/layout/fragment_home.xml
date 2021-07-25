@@ -12,7 +12,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/svItemHome"
         android:iconifiedByDefault="false"
-       />
+       >
+
+    </SearchView>
+
+    <CheckBox
+        android:id="@+id/cbFilterMeasurement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/svItemHome"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:checked="false"
+        android:text="Filter items by my measurements" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -20,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:layout_below="@id/svItemHome"
+        android:layout_below="@id/cbFilterMeasurement"
         android:padding="8dp" />
 
 </RelativeLayout>
