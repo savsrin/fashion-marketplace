@@ -225,7 +225,8 @@ public class HomeFragment extends Fragment {
             query.whereMatchesQuery("seller", userQuery);
         }
 
-        query.whereWithinMiles("pickupLocation",buyerLocation, 20);
+        query.whereWithinMiles("pickupLocation", buyerLocation,20);
+        query.whereEqualTo("status", Item.AVAILABLE);
         query.setLimit(10);
         query.findInBackground(new FindCallback<Item>() {
             @Override

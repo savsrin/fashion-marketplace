@@ -317,6 +317,7 @@ public class CreateFragment extends Fragment {
         item.setSize(size);
         item.setPrice(price);
         item.setSeller(currentUser);
+        item.setStatus(Item.AVAILABLE);
         item.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
