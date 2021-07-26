@@ -10,6 +10,7 @@ import java.util.Date;
 public class Transaction extends ParseObject {
     public static final String KEY_PICKUP_TIME = "buyerPickupTime";
     public static final String KEY_BUYER = "buyer";
+    public static final String KEY_SELLER = "seller";
     public static final String KEY_ITEM = "item";
     public static final String KEY_BUYER_EMAIL = "buyerEmail";
     public static final String KEY_BUYER_PHONE = "buyerPhone";
@@ -19,6 +20,7 @@ public class Transaction extends ParseObject {
 
     public Date getPickupTime () {return getDate(KEY_PICKUP_TIME);}
     public ParseUser getBuyer () {return getParseUser(KEY_BUYER);}
+    public ParseUser getSeller () {return getParseUser(KEY_SELLER);}
     public Item getCurItem () {return (Item) getParseObject(KEY_ITEM);}
     public String getBuyerEmail () { return getString(KEY_BUYER_EMAIL);}
     public String getBuyerPhone () { return getString(KEY_BUYER_PHONE);}
@@ -28,6 +30,7 @@ public class Transaction extends ParseObject {
 
     public void setPickupTime(Date time) { put(KEY_PICKUP_TIME, time);}
     public void setBuyer(ParseUser buyer) { put(KEY_BUYER, buyer);}
+    public void setSeller(ParseUser seller) { put(KEY_BUYER, seller);}
     public void setCurItem(Item item) { put(KEY_ITEM, item);}
     public void setBuyerEmail(String email) { put(KEY_BUYER_EMAIL, email);}
     public void setPaymentStatus(Boolean paid) { put(KEY_PAID, paid);}
