@@ -206,17 +206,7 @@ public class HomeFragment extends Fragment {
 
         if (filterMeasurement) {
             // return items with sellers who have measurements within a small radius of the buyer's
-            ParseQuery<UserMeasurement> measurementQuery = ParseQuery.getQuery(UserMeasurement.class);
-            measurementQuery.whereGreaterThanOrEqualTo("chest", buyerMeasurement.getChest() - 2);
-            measurementQuery.whereLessThanOrEqualTo("chest", buyerMeasurement.getChest() + 2);
-            measurementQuery.whereGreaterThanOrEqualTo("waist", buyerMeasurement.getWaist() - 2);
-            measurementQuery.whereLessThanOrEqualTo("waist", buyerMeasurement.getWaist() + 2);
-            measurementQuery.whereGreaterThanOrEqualTo("hip", buyerMeasurement.getHip() - 2);
-            measurementQuery.whereLessThanOrEqualTo("hip", buyerMeasurement.getHip() + 2);
-            measurementQuery.whereGreaterThanOrEqualTo("height", buyerMeasurement.getHeight() - 3);
-            measurementQuery.whereLessThanOrEqualTo("height", buyerMeasurement.getHeight() + 3);
-            measurementQuery.whereGreaterThanOrEqualTo("weight", buyerMeasurement.getWeight() - 5);
-            measurementQuery.whereLessThanOrEqualTo("weight", buyerMeasurement.getWeight() + 5);
+            ParseQuery<UserMeasurement> measurementQuery = createMeasurementQuery(buyerMeasurement);
 
             ParseQuery<ParseUser> userQuery = ParseQuery.getQuery(ParseUser.class);
             userQuery.include("measurement");
@@ -278,6 +268,23 @@ public class HomeFragment extends Fragment {
         //noinspection MissingPermission
         getFusedLocationProviderClient(getActivity()).requestLocationUpdates(mLocationRequest, locationCallback,
                 Looper.myLooper());
+    }
+
+    private ParseQuery<UserMeasurement> createMeasurementQuery(UserMeasurement buyerMeasurement) {
+        ParseQuery<UserMeasurement> measurementQuery = ParseQuery.getQuery(UserMeasurement.class);
+
+        measurementQuery.whereGreaterThanOrEqualTo("chest", buyerMeasurement.getChest() - 2);
+        measurementQuery.whereLessThanOrEqualTo("chest", buyerMeasurement.getChest() + 2);
+        measurementQuery.whereGreaterThanOrEqualTo("waist", buyerMeasurement.getWaist() - 2);
+        measurementQuery.whereLessThanOrEqualTo("waist", buyerMeasurement.getWaist() + 2);
+        measurementQuery.whereGreaterThanOrEqualTo("hip", buyerMeasurement.getHip() - 2);
+        measurementQuery.whereLessThanOrEqualTo("hip", buyerMeasurement.getHip() + 2);
+        measurementQuery.whereGreaterThanOrEqualTo("height", buyerMeasurement.getHeight() - 3);
+        measurementQuery.whereLessThanOrEqualTo("height", buyerMeasurement.getHeight() + 3);
+        measurementQuery.whereGreaterThanOrEqualTo("weight", buyerMeasurement.getWeight() - 5);
+        measurementQuery.whereLessThanOrEqualTo("weight", buyerMeasurement.getWeight() + 5);
+
+        return measurementQuery;
     }
 
     private void initQuery() {
