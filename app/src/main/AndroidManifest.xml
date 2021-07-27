@@ -24,7 +24,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PersonalProject">
-        <activity android:name=".activities.SearchResultsActivity"></activity>
+        <activity android:name=".activities.TransactionActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

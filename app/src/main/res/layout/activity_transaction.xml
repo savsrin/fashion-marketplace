@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    android:layout_centerInParent="true"
+    tools:context=".activities.TransactionActivity">
+
+    <EditText
+        android:id="@+id/etPhoneBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:layout_below="@id/etEmailBuy"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/tvContactInfoTrans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvSellerTrans"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="40dp"
+        android:text="Please enter your contact information for this transaction."
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvSellerTrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/ivTransPhoto"
+        android:textAlignment="viewStart"
+        android:textStyle="bold"
+        tools:text="Seller: @savitha" />
+
+    <TextView
+        android:id="@+id/tvPriceTrans"
+        android:layout_toEndOf="@id/tvSellerTrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivTransPhoto"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:textAlignment="viewStart"
+        android:textStyle="bold"
+        tools:text="Price: $20.42" />
+
+    <TextView
+        android:id="@+id/tvSizeTrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivTransPhoto"
+        android:layout_toEndOf="@id/tvPriceTrans"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="5dp"
+        android:textAlignment="viewStart"
+        android:textStyle="bold"
+        tools:text="Size: M" />
+
+    <EditText
+        android:id="@+id/etEmailBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_below="@id/tvContactInfoTrans"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvPurchaseConf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:text="Confirm Your Purchase Request"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvItemNameTrans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPurchaseConf"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Black Miniskirt" />
+
+    <ImageView
+        android:id="@+id/ivTransPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/tvItemNameTrans"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="74dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/btnTrans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etPhoneBuy"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Submit Request" />
+
+
+</RelativeLayout>

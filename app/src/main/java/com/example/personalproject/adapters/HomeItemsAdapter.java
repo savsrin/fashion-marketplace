@@ -1,6 +1,8 @@
 package com.example.personalproject.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.personalproject.activities.TransactionActivity;
 import com.example.personalproject.databinding.ItemClothingBinding;
 import com.example.personalproject.models.Item;
+import com.example.personalproject.models.Transaction;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -129,7 +134,25 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
                                             .distanceInMilesTo(currentBuyerLocation);
             distanceToSeller = round(distanceToSeller, 2);
             itemClothingBinding.tvSellerDistanceRV.setText(distanceToSeller.toString() + " miles");
+
+            itemClothingBinding.btnBuyRv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != -1) {
+                        Item curItem = itemsFiltered.get(position);
+                        ParseUser buyer = ParseUser.getCurrentUser();
+                        Intent intent = new Intent(context, TransactionActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("buyer", buyer);
+                        bundle.putParcelable("item", curItem);
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
+
 
         @Override
         public void onClick(View v) {
