@@ -92,8 +92,7 @@ public class HomeFragment extends Fragment {
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
     boolean filterMeasurement = false;
-
-
+    
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -138,7 +137,9 @@ public class HomeFragment extends Fragment {
             // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
             // is not null.
             currentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            initQuery();
+            if (currentLocation != null) {
+                initQuery();
+            }
         }
     }
 
