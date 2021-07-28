@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
@@ -53,8 +54,12 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.livequery.ParseLiveQueryClient;
+import com.parse.livequery.SubscriptionHandling;
 
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +78,12 @@ public class HomeFragment extends Fragment {
 
     public static final String TAG = "HomeFragment";
 
+    ParseLiveQueryClient parseLiveQueryClient = null;
+    SubscriptionHandling<Item> subscriptionHandling = null;
+    ParseQuery<Item> subscribedQuery = null;
     Location currentLocation;
     FusedLocationProviderClient client;
+
     private List<Item> items = new ArrayList<>();;
     private HomeItemsAdapter adapter;
     private FragmentHomeBinding binding;
@@ -83,6 +92,7 @@ public class HomeFragment extends Fragment {
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
     boolean filterMeasurement = false;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -170,9 +180,31 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        Log.i(TAG, "in on destroy");
+        if (parseLiveQueryClient != null && subscribedQuery != null) {
+            Log.i(TAG, "Unsubscribing live query");
+            parseLiveQueryClient.unsubscribe(subscribedQuery);
+            subscribedQuery = null;
+        }
+        super.onDestroy();
+    }
+
+    @Override
     public void onResume() {
         Log.i(TAG, "in on resume");
         super.onResume();
+        if (parseLiveQueryClient == null) {
+            try {
+                parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(
+                                        new URI("wss://fashionmarketplace.b4a.io/"));
+                Log.i(TAG, "parse query client created");
+            } catch (URISyntaxException e) {
+                Log.i(TAG, "Exception from initializing parse Live Query Client.");
+                e.printStackTrace();
+            }
+        }
+
         if (currentLocation != null ) {
             Log.i(TAG, "using cached value of location");
             initQuery();
@@ -200,7 +232,6 @@ public class HomeFragment extends Fragment {
 
     public void queryItems(ParseGeoPoint buyerLocation,
                            UserMeasurement buyerMeasurement) {
-
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
         query.include(Item.KEY_SELLER);
 
@@ -217,6 +248,7 @@ public class HomeFragment extends Fragment {
 
         query.whereWithinMiles("pickupLocation", buyerLocation,20);
         query.whereEqualTo("status", Item.AVAILABLE);
+        subscribeToLiveQuery(query);
         query.setLimit(10);
         query.findInBackground(new FindCallback<Item>() {
             @Override
@@ -302,6 +334,53 @@ public class HomeFragment extends Fragment {
                 queryItems(buyerLocation, buyerMeasurement);
             }
         });
+    }
+
+    private void subscribeToLiveQuery(ParseQuery<Item> parseQuery) {
+        if (parseLiveQueryClient != null) {
+            if (subscribedQuery != null) {
+                Log.i(TAG, "Unsubscribing live query");
+                parseLiveQueryClient.unsubscribe(subscribedQuery);
+                subscribedQuery = null;
+            }
+            subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
+            Log.i(TAG, "Subscription of live query done.");
+            subscriptionHandling.handleEvent(SubscriptionHandling.Event.LEAVE, new SubscriptionHandling.HandleEventCallback<Item>() {
+                @Override
+                public void onEvent(ParseQuery<Item> query, Item removedItem) {
+                    String removedItemObjectId = removedItem.getObjectId();
+                    Log.i(TAG, "Remove Item Object Id: " + removedItemObjectId);
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        public void run() {
+                            Log.i(TAG, "in main looper, LEAVE event");
+                            adapter.onItemRemoved(removedItemObjectId);
+                        }
+                    });
+                }
+            });
+
+            subscriptionHandling.handleEvent(SubscriptionHandling.Event.ENTER, new SubscriptionHandling.HandleEventCallback<Item>() {
+                @Override
+                public void onEvent(ParseQuery<Item> query, Item addedItem) {
+                    Log.i(TAG, "Added Item Object Id: " + addedItem.getObjectId());
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        public void run() {
+                            Log.i(TAG, "in main looper, ENTER event");
+                            addedItem.getParseObject("seller").fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject object, ParseException e) {
+                                    Log.i(TAG, "Seller fetched in enter event.");
+                                    adapter.onItemAdded(addedItem);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+        subscribedQuery = parseQuery;
     }
 
     private void initSearchWidget() {

@@ -20,6 +20,7 @@ import com.example.personalproject.models.Item;
 import com.example.personalproject.models.Transaction;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.math.BigDecimal;
@@ -29,10 +30,13 @@ import java.util.List;
 
 public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.ViewHolder>
                                                                 implements  Filterable {
+    private static final String TAG = "HomeItemsAdapter";
+
     private List<Item> items;
     private List<Item> itemsFiltered;
     private Context context;
     private ParseGeoPoint currentBuyerLocation;
+    private String filterQuery = "";
 
     public HomeItemsAdapter(Context context, List<Item> items) {
         this.context = context;
@@ -70,17 +74,13 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                String query = constraint.toString().toLowerCase().trim();
-                if (query.isEmpty()) {
+                filterQuery = constraint.toString().toLowerCase().trim();
+                if (filterQuery.isEmpty()) {
                     itemsFiltered = items;
                 } else {
                     List<Item> filteredList = new ArrayList<>();
                     for (Item item : items) {
-                        if (item.getItemBrand().toLowerCase().contains(query)
-                            || item.getItemType().toLowerCase().contains(query)
-                            || item.getCondition().toLowerCase().contains(query)
-                            || item.getDescription().toLowerCase().contains(query)
-                            || item.getDisplayName().toLowerCase().contains(query)) {
+                        if (isFiltered(item)) {
                             filteredList.add(item);
                         }
                     }
@@ -107,7 +107,68 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
         return bd.doubleValue();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public void onItemRemoved(String removedItemObjectId) {
+        boolean updateNeeded = false;
+        if (removeItem(items, removedItemObjectId)) {
+            updateNeeded = true;
+            Log.i(TAG, "Item removed from items");
+        }
+
+        if (removeItem(itemsFiltered, removedItemObjectId)) {
+            updateNeeded = true;
+            Log.i(TAG, "Item removed from itemsFiltered");
+        }
+
+        if (updateNeeded) {
+            notifyDataSetChanged();
+        }
+    }
+
+    public void onItemAdded(Item addedItem) {
+        addItem(items, addedItem);
+        Log.i(TAG, "Item added to items");
+        if (!filterQuery.isEmpty() && isFiltered(addedItem)) {
+            addItem(itemsFiltered, addedItem);
+            Log.i(TAG, "Item added to itemsFiltered");
+        }
+        notifyDataSetChanged();
+    }
+
+    private Boolean isFiltered(Item item) {
+        return (item.getItemBrand().toLowerCase().contains(filterQuery)
+                || item.getItemType().toLowerCase().contains(filterQuery)
+                || item.getCondition().toLowerCase().contains(filterQuery)
+                || item.getDescription().toLowerCase().contains(filterQuery)
+                || item.getDisplayName().toLowerCase().contains(filterQuery));
+    }
+
+    private void addItem(List<Item> items, Item addedItem) {
+        Double addedItemDistance = addedItem.getPickupLocation()
+                .distanceInMilesTo(currentBuyerLocation);
+
+        for (int i = 0; i < items.size(); i++) {
+            Double curItemDistance = items.get(i).getPickupLocation()
+                    .distanceInMilesTo(currentBuyerLocation);
+            if (addedItemDistance <= curItemDistance) {
+                items.add(i, addedItem);
+                return;
+            }
+        }
+        items.add(addedItem);
+        return;
+    }
+
+    private Boolean removeItem(List<Item> items, String removedItemObjectId) {
+        for (Item item : items) {
+            if (item.getObjectId().equals(removedItemObjectId)) {
+                items.remove(item);
+                return true;
+            }
+        }
+        return  false;
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ItemClothingBinding itemClothingBinding;
 
         public ViewHolder(@NonNull ItemClothingBinding itemClothingBinding) {
@@ -152,7 +213,6 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
                 }
             });
         }
-
 
         @Override
         public void onClick(View v) {
