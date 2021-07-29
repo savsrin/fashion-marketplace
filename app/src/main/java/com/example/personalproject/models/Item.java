@@ -1,21 +1,38 @@
 package com.example.personalproject.models;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.livequery.ParseLiveQueryClient;
+import com.parse.livequery.SubscriptionHandling;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import bolts.Continuation;
+import bolts.Task;
+import bolts.TaskCompletionSource;
 
 @ParseClassName("Item")
 public class Item extends ParseObject {
-    
     // Order in which the items on the Sales tab of the Dashboard will be sorted for the seller.
     public static final Integer PENDING = 0;
     public static final Integer AVAILABLE = 1;
     public static final Integer SOLD = 2;
 
+    public static final String TAG = "ItemClass";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_SIZE = "size";
     public static final String KEY_LOCATION = "pickupLocation";
@@ -54,4 +71,32 @@ public class Item extends ParseObject {
     public void setSeller(ParseUser seller) { put(KEY_SELLER,seller); }
     public void setTransaction(@Nullable Transaction transaction) {put(KEY_TRANSACTION, transaction);}
     public void setStatus(Integer status) {put(KEY_STATUS, status);}
+
+    public Task<Item> purchase(String buyerEmail, String buyerPhone) {
+        Transaction transaction = new Transaction();
+        transaction.setCurItem(Item.this);
+        transaction.setBuyer(ParseUser.getCurrentUser());
+        transaction.setBuyerEmail(buyerEmail);
+        transaction.setBuyerPhone(buyerPhone);
+        transaction.setSeller(Item.this.getSeller());
+        transaction.setPaymentStatus(false);
+
+        Item.this.setTransaction(transaction);
+        Item.this.setStatus(PENDING);
+
+        final TaskCompletionSource<Item> tcs = new TaskCompletionSource<>();
+        Item.this.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    tcs.setResult(Item.this);
+                } else {
+                    tcs.setError(e);
+                }
+            }
+        });
+        return tcs.getTask();
+    }
 }
+
+

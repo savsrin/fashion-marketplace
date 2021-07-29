@@ -19,6 +19,7 @@ import com.example.personalproject.R;
 import com.example.personalproject.databinding.ActivityMainBinding;
 import com.example.personalproject.databinding.ActivityTransactionBinding;
 import com.example.personalproject.models.Item;
+import com.example.personalproject.models.Transaction;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -28,6 +29,9 @@ import com.parse.livequery.SubscriptionHandling;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import bolts.Continuation;
+import bolts.Task;
 
 public class TransactionActivity extends AppCompatActivity {
     public static final String TAG = "TransactionActivity";
@@ -42,6 +46,7 @@ public class TransactionActivity extends AppCompatActivity {
     Item item;
     String buyerPhone;
     String buyerEmail;
+    Boolean hasPurchased= false;
     Boolean isStopped;
 
     @Override
@@ -60,7 +65,7 @@ public class TransactionActivity extends AppCompatActivity {
         }
 
         initView();
-        
+
         try {
             parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI("wss://fashionmarketplace.b4a.io/"));
             Log.i(TAG, "parse query client created");
@@ -83,6 +88,11 @@ public class TransactionActivity extends AppCompatActivity {
                         Log.i(TAG, "Updated item is still available");
                         return;
                     }
+
+                    if (hasPurchased) {
+                        return;
+                    }
+
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         public void run() {
@@ -120,8 +130,36 @@ public class TransactionActivity extends AppCompatActivity {
                 Log.i(TAG, buyerPhone);
                 Log.i(TAG, buyerEmail);
 
-                // TODO: update database with transaction information & change item status to pending
-                // TODO: Then, navigate user to Purchases Tab of Dashboard
+                binding.btnTrans.setEnabled(false);
+                binding.btnTrans.setBackgroundColor(Color.GRAY);
+
+                hasPurchased = true;
+                item.purchase(buyerEmail, buyerPhone).continueWith(new Continuation<Item, Void> () {
+                    @Override
+                    public Void then(Task<Item> task) throws Exception {
+                        if (task.isCancelled()) {
+                            // this task can't be cancelled so we don't need to handle this
+                        } else if (task.isFaulted()) {
+                            Exception error = task.getError();
+                            Log.i(TAG, "Error while saving: " + task.getError());
+                            hasPurchased = false;
+                            binding.btnTrans.setEnabled(true);
+                            binding.btnTrans.setBackgroundColor(Color.MAGENTA);
+                            Toast.makeText(TransactionActivity.this,
+                                    "Error saving item. Please try again.",
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            Log.i(TAG, "Save was successful");
+                            Toast.makeText(TransactionActivity.this,
+                                    "Seller has been notified & will be in touch shortly!",
+                                            Toast.LENGTH_LONG).show();
+                            /* TODO: Then, navigate user to Purchases Tab of Dashboard.
+                                Because of this, onDestroy will be called and we don't have
+                                to unsubscribe here.*/
+                        }
+                        return null;
+                    }
+                });
             }
         });
     }

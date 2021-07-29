@@ -33,6 +33,7 @@ public class Transaction extends ParseObject {
     public void setSeller(ParseUser seller) { put(KEY_BUYER, seller);}
     public void setCurItem(Item item) { put(KEY_ITEM, item);}
     public void setBuyerEmail(String email) { put(KEY_BUYER_EMAIL, email);}
+    public void setBuyerPhone(String phone) {put (KEY_BUYER_PHONE, phone);}
     public void setPaymentStatus(Boolean paid) { put(KEY_PAID, paid);}
     public void setDeliveryStatus(Boolean delivered) { put(KEY_PAID, delivered);}
     public void setContactedStatus(Boolean contacted) { put(KEY_CONTACTED, contacted);}
