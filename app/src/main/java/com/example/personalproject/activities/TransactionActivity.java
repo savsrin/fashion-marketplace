@@ -3,8 +3,11 @@ package com.example.personalproject.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +21,8 @@ import com.bumptech.glide.Glide;
 import com.example.personalproject.R;
 import com.example.personalproject.databinding.ActivityMainBinding;
 import com.example.personalproject.databinding.ActivityTransactionBinding;
+import com.example.personalproject.fragments.DashboardFragment;
+import com.example.personalproject.fragments.HomeFragment;
 import com.example.personalproject.models.Item;
 import com.example.personalproject.models.Transaction;
 import com.parse.ParseFile;
@@ -153,9 +158,12 @@ public class TransactionActivity extends AppCompatActivity {
                             Toast.makeText(TransactionActivity.this,
                                     "Seller has been notified & will be in touch shortly!",
                                             Toast.LENGTH_LONG).show();
-                            /* TODO: Then, navigate user to Purchases Tab of Dashboard.
-                                Because of this, onDestroy will be called and we don't have
-                                to unsubscribe here.*/
+                           
+                            Fragment dashboard = new DashboardFragment();
+                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.layout, dashboard);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
                         }
                         return null;
                     }
