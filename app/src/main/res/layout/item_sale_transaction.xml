@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSalesTransac"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="4dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivSalesTransacImage"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="29dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvSalesTransacTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/ivSalesTransacImage"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold"
+            tools:text="Black Mini Skirt" />
+
+        <TextView
+            android:id="@+id/tvPriceSalesTransac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSalesTransacTitle"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/tvcreatedAtSalesTransac"
+            android:text="List Price: $10" />
+
+        <TextView
+            android:id="@+id/tvcreatedAtSalesTransac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSalesTransacTitle"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/ivSalesTransacImage"
+            tools:text="Published 2 days ago" />
+
+        <TextView
+            android:id="@+id/tvStatusSalesTransac"
+            android:layout_width="97dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="-36dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="7dp"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="#232222"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            tools:text="PENDING" />
+
+        <TextView
+            android:id="@+id/tvBuyerDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvcreatedAtSalesTransac"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="1dp"
+            android:layout_toEndOf="@id/ivSalesTransacImage"
+            android:text="Buyer Details:"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvBuyerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvBuyerDetails"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/ivSalesTransacImage"
+            tools:text="Name: Savitha S." />
+
+        <TextView
+            android:id="@+id/tvBuyerEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvBuyerName"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/ivSalesTransacImage"
+            tools:text="Email: savsrin@gmail.com" />
+
+
+        <TextView
+            android:id="@+id/tvBuyerPhoneSalesTransac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvBuyerDetails"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/tvBuyerName"
+            tools:text="Phone: 425-533-8888" />
+
+        <Button
+            android:id="@+id/btnConfirmPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvBuyerEmail"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/ivSalesTransacImage"
+            android:text="MARK PAID" />
+
+        <Button
+            android:id="@+id/btnCancelTransaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvBuyerEmail"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@id/btnConfirmPayment"
+            android:text="CANCEL" />
+
+
+
+    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
