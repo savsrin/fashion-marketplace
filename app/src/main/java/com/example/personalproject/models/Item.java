@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.parse.DeleteCallback;
 import com.parse.GetCallback;
+import com.parse.ParseACL;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -76,10 +77,14 @@ public class Item extends ParseObject {
     public Task<Item> purchase(String buyerEmail, String buyerPhone) {
         Transaction transaction = new Transaction();
         transaction.setCurItem(Item.this);
+
+        ParseACL parseACL = new ParseACL(ParseUser.getCurrentUser());
+        parseACL.setPublicReadAccess(true);
+        ParseUser.getCurrentUser().setACL(parseACL);
+
         transaction.setBuyer(ParseUser.getCurrentUser());
         transaction.setBuyerEmail(buyerEmail);
         transaction.setBuyerPhone(buyerPhone);
-        transaction.setSeller(Item.this.getSeller());
         transaction.setPaymentStatus(false);
 
         Item.this.setTransaction(transaction);
