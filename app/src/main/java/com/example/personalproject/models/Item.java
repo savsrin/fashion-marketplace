@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
@@ -92,6 +93,55 @@ public class Item extends ParseObject {
                     tcs.setResult(Item.this);
                 } else {
                     tcs.setError(e);
+                }
+            }
+        });
+        return tcs.getTask();
+    }
+
+    public Task<Item> completeSale() {
+        Item.this.getTransaction().setPaymentStatus(true);
+        Item.this.setStatus(SOLD);
+
+        final TaskCompletionSource<Item> tcs = new TaskCompletionSource<>();
+        Item.this.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    tcs.setResult(Item.this);
+                } else {
+                    tcs.setError(e);
+                }
+            }
+        });
+        return tcs.getTask();
+    }
+
+    public Task<Item> cancelSale() {
+        Item.this.setStatus(Item.AVAILABLE);
+        Transaction transaction = Item.this.getTransaction();
+        Item.this.remove("transaction");
+
+        final TaskCompletionSource<Item> tcs = new TaskCompletionSource<>();
+        Item.this.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.i(TAG, "error saving item for available status");
+                    tcs.setError(e);
+                } else {
+                    Log.i(TAG, "save successful for available status.");
+                    transaction.deleteInBackground(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Log.i(TAG, "error deleting transaction object");
+                            }  else {
+                                Log.i(TAG, "deleted transaction object");
+                            }
+                            tcs.setResult(Item.this);
+                        }
+                    });
                 }
             }
         });

@@ -6,12 +6,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.personalproject.R;
+import com.example.personalproject.activities.TransactionActivity;
 import com.example.personalproject.databinding.ItemSaleTransactionBinding;
+import com.example.personalproject.fragments.DashboardFragment;
 import com.example.personalproject.models.Item;
 import com.example.personalproject.models.Transaction;
 import com.parse.DeleteCallback;
@@ -20,6 +26,9 @@ import com.parse.ParseFile;
 import com.parse.SaveCallback;
 
 import java.util.List;
+
+import bolts.Continuation;
+import bolts.Task;
 
 public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
     public final String TAG = "SalesAdapter";
@@ -114,10 +123,25 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
             itemSaleTransactionBinding.btnConfirmPayment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /* TODO: change item status to sold & update transaction to paid;
-                             Note that the UI is updated when the live subscription gets an
-                             update notification.
-                     */
+                    item.completeSale().continueWith(new Continuation<Item, Void>() {
+                        @Override
+                        public Void then(Task<Item> task) throws Exception {
+                            if (task.isCancelled()) {
+                                // this task can't be cancelled so we don't need to handle this
+                            } else if (task.isFaulted()) {
+                                Exception error = task.getError();
+                                Log.i(TAG, "Error while saving: " + task.getError());
+                                Toast.makeText(context,
+                                        "Error updating sale status. Please try again.",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                /* Note that the UI is updated when the live subscription gets an
+                                   update notification for the item.*/
+                                Log.i(TAG, "Save was successful");
+                            }
+                            return null;
+                        }
+                    });
                 }
             });
 
@@ -128,6 +152,25 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
                             delete transaction; Note that the UI is updated when the live subscription
                             gets an update notification.
                      */
+                    item.cancelSale().continueWith(new Continuation<Item, Void>() {
+                        @Override
+                        public Void then(Task<Item> task) throws Exception {
+                            if (task.isCancelled()) {
+                                // this task can't be cancelled so we don't need to handle this
+                            } else if (task.isFaulted()) {
+                                Exception error = task.getError();
+                                Log.i(TAG, "Error while saving: " + task.getError());
+                                Toast.makeText(context,
+                                        "Error updating cancellation status. Please try again.",
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                /* Note that the UI is updated when the live subscription gets an
+                                   update notification for the item.*/
+                                Log.i(TAG, "Cancellation was successful");
+                            }
+                            return null;
+                        }
+                    });
                 }
             });
         }
