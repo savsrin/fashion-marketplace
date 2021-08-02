@@ -53,7 +53,7 @@ public class TransactionActivity extends AppCompatActivity {
     String buyerEmail;
     Boolean hasPurchased= false;
     Boolean isStopped;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "in onCreate");
@@ -158,12 +158,8 @@ public class TransactionActivity extends AppCompatActivity {
                             Toast.makeText(TransactionActivity.this,
                                     "Seller has been notified & will be in touch shortly!",
                                             Toast.LENGTH_LONG).show();
-                           
-                            Fragment dashboard = new DashboardFragment();
-                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.layout, dashboard);
-                            transaction.addToBackStack(null);
-                            transaction.commit();
+                            Intent intent = new Intent(TransactionActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
                         return null;
                     }
@@ -206,4 +202,5 @@ public class TransactionActivity extends AppCompatActivity {
         binding.tvPriceTrans.setText("$" + item.getPrice().toString());
         binding.tvSizeTrans.setText("Size: " + item.getSize());
     }
+
 }
