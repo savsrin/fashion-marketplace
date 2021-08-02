@@ -53,7 +53,13 @@ public class TransactionActivity extends AppCompatActivity {
     String buyerEmail;
     Boolean hasPurchased= false;
     Boolean isStopped;
-    
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "in onCreate");

@@ -1,5 +1,6 @@
 package com.example.personalproject.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.personalproject.R;
 import com.example.personalproject.activities.TransactionActivity;
 import com.example.personalproject.databinding.ItemClothingBinding;
 import com.example.personalproject.models.Item;
@@ -208,7 +210,9 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
                         bundle.putParcelable("buyer", buyer);
                         bundle.putParcelable("item", curItem);
                         intent.putExtras(bundle);
-                        context.startActivity(intent);
+                        Activity activity = (Activity) context;
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                 }
             });
