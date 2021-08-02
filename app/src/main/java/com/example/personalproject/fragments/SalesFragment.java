@@ -145,7 +145,24 @@ public class SalesFragment extends Fragment {
                     handler.post(new Runnable() {
                         public void run() {
                             Log.i(TAG, "in main looper, UPDATE event");
-                            adapter.handleItemUpdate(updatedItem);
+                            if (updatedItem.getStatus() == Item.PENDING){
+                                updatedItem.getParseObject("transaction")
+                                        .fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                                    @Override
+                                    public void done(ParseObject object, ParseException e) {
+                                        Log.i(TAG, "Seller fetched in enter event.");
+                                        updatedItem.getTransaction().getParseObject("buyer")
+                                                .fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                                            @Override
+                                            public void done(ParseObject object, ParseException e) {
+                                                adapter.handleItemUpdate(updatedItem);
+                                            }
+                                        });
+                                    }
+                                });
+                            } else {
+                                adapter.handleItemUpdate(updatedItem);
+                            }
                         }
                     });
                 }

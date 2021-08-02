@@ -69,6 +69,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
     public void handleItemUpdate(Item updatedItem) {
         if (removeItem(updatedItem)) {
             addItem(updatedItem);
+            Log.i(TAG, "Number of items: " + items.size());
             notifyDataSetChanged();
         }
     }
@@ -78,6 +79,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
             Item curItem = items.get(i);
             if (curItem.getObjectId().equals(itemToRemove.getObjectId())) {
                 items.remove(i);
+                Log.i(TAG, "Removed item from list");
                 return true;
             }
         }
@@ -87,8 +89,9 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
     private void addItem(Item itemToAdd) {
         for (int i = 0; i < items.size(); i++) {
             Item curItem = items.get(i);
-            if (itemToAdd.getStatus() <= curItem.getStatus() &&
-                itemToAdd.getCreatedAt().compareTo(curItem.getCreatedAt()) >= 0) {
+            if (itemToAdd.getStatus() < curItem.getStatus() ||
+                (itemToAdd.getStatus() == curItem.getStatus() &&
+                 itemToAdd.getCreatedAt().compareTo(curItem.getCreatedAt()) >= 0)) {
                 items.add(i, itemToAdd);
                 return;
             }
