@@ -161,7 +161,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
 
         public void bind(Item item) {
             itemSaleTransactionBinding.tvSalesTransacTitle.setText(item.getDisplayName());
-            itemSaleTransactionBinding.tvPriceSalesTransac.setText("List Price: $"
+            itemSaleTransactionBinding.tvSalesPrice.setText("List Price: $"
                                                                     + item.getPrice().toString());
             ParseFile image = item.getPhoto();
             if (image != null) {
@@ -228,6 +228,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.VISIBLE);
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.VISIBLE);
             itemSaleTransactionBinding.tvStatusSalesTransac.setText("PENDING");
+            Glide.with(context).load(R.drawable.bell_alert).into(itemSaleTransactionBinding.ivIconStatus);
         }
 
         private void initNonPendingItemView(Item item) {
@@ -236,8 +237,10 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.INVISIBLE);
             if (item.getStatus() == Item.AVAILABLE) {
                 itemSaleTransactionBinding.tvStatusSalesTransac.setText("AVAILABLE");
+                Glide.with(context).load(R.drawable.cart).into(itemSaleTransactionBinding.ivIconStatus);
             } else{
                 itemSaleTransactionBinding.tvStatusSalesTransac.setText("SOLD");
+                Glide.with(context).load(R.drawable.check_circle).into(itemSaleTransactionBinding.ivIconStatus);
             }
         }
 

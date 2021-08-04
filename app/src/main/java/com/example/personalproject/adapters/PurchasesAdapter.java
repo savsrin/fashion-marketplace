@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.personalproject.R;
 import com.example.personalproject.databinding.ItemPurchaseTransactionBinding;
 import com.example.personalproject.databinding.ItemSaleTransactionBinding;
 import com.example.personalproject.models.Item;
@@ -61,7 +62,7 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.View
             itemPurchaseTransactionBinding.tvPurchaseTransacTitle
                                             .setText(item.getDisplayName());
             itemPurchaseTransactionBinding.tvPricePurchaseTransac
-                                            .setText(item.getPrice().toString());
+                                            .setText("List Price: $" + item.getPrice().toString());
             itemPurchaseTransactionBinding.tvSellerPurchaseTransac
                                             .setText("Seller: " + item.getSeller().get("name"));
 
@@ -71,9 +72,11 @@ public class PurchasesAdapter extends RecyclerView.Adapter<PurchasesAdapter.View
                         .into(itemPurchaseTransactionBinding.ivPurchaseTransacImage);
             }
             if (transaction.isPaid()) {
-                itemPurchaseTransactionBinding.btnStatus.setText("PURCHASED");
+                itemPurchaseTransactionBinding.tvStatusPurchase.setText("PURCHASED");
+                Glide.with(context).load(R.drawable.check_circle).into(itemPurchaseTransactionBinding.ivPurchaseStatus);
             } else  {
-                itemPurchaseTransactionBinding.btnStatus.setText("PENDING");
+                itemPurchaseTransactionBinding.tvStatusPurchase.setText("PENDING");
+                Glide.with(context).load(R.drawable.bell_alert).into(itemPurchaseTransactionBinding.ivPurchaseStatus);
             }
         }
     }

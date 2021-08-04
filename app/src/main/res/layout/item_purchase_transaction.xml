@@ -2,6 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -12,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/light_yellow"
         card_view:cardCornerRadius="4dp">
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,20 +25,16 @@
                 android:id="@+id/ivPurchaseTransacImage"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="9dp"
+                android:layout_below="@id/tvPurchaseTransacTitle"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/tvPurchaseTransacTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/ivPurchaseTransacImage"
+                android:fontFamily="@font/allerta"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="bold"
                 tools:text="Black Mini Skirt" />
@@ -47,28 +46,44 @@
                 android:layout_below="@id/tvPurchaseTransacTitle"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@id/tvSellerPurchaseTransac"
-                android:text="List Price: $10" />
+                android:layout_toEndOf="@id/ivPurchaseStatus"
+                android:text="List Price: $10"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvSellerPurchaseTransac"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvPurchaseTransacTitle"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@id/ivPurchaseTransacImage"
+                android:layout_below="@id/tvPricePurchaseTransac"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/ivPurchaseStatus"
+                android:fontFamily="@font/allerta"
+                android:textStyle="bold"
                 tools:text="Seller: @savitha" />
 
-            <Button
-                android:id="@+id/btnStatus"
+            <ImageView
+                android:id="@+id/ivPurchaseStatus"
+                android:layout_width="75dp"
+                android:layout_height="125dp"
+                android:layout_below="@id/tvPurchaseTransacTitle"
+                android:layout_toEndOf="@id/ivPurchaseTransacImage"
+                android:layout_margin="15dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvStatusPurchase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvSellerPurchaseTransac"
-                android:layout_marginStart="75dp"
-                android:layout_marginTop="15dp"
+                android:layout_below="@id/tvPurchaseTransacTitle"
+                android:layout_alignStart="@id/ivPurchaseStatus"
+                android:layout_alignTop="@id/ivPurchaseTransacImage"
+                android:layout_marginTop="0dp"
                 android:layout_toEndOf="@id/ivPurchaseTransacImage"
-                tools:text="PENDING" />
+                android:fontFamily="@font/allerta"
+                android:text="TextView"
+                android:textStyle="bold"
+                tools:text="PURCHASED" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

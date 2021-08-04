@@ -1,124 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/ivItemImageRV"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="10dp"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvItemNameRV"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewHome"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/ivItemImageRV"
-        android:layout_toRightOf="@id/ivItemImageRV"
-        android:text="TextView"
-        android:textStyle="bold"
-        tools:text="Plaid Jacket" />
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/light_yellow"
+        card_view:cardCornerRadius="4dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvSellerDistanceRV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+            <ImageView
+                android:id="@+id/ivItemImageRV"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
+                tools:srcCompat="@tools:sample/avatars" />
 
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvItemNameRV"
-        android:text="TextView"
-        android:textColor="#F44336"
-        tools:text="9 miles" />
+            <TextView
+                android:id="@+id/tvItemNameRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/ivItemImageRV"
+                android:layout_toRightOf="@id/ivItemImageRV"
+                android:ellipsize="end"
+                android:fontFamily="@font/allerta"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textStyle="bold"
+                tools:text="Plaid Jacket" />
 
-    <TextView
-        android:id="@+id/tvPriceRV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvItemNameRV"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/ivItemImageRV"
-        android:text="TextView"
-        tools:text="$25" />
+            <TextView
+                android:id="@+id/tvSellerDistanceRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/tvItemNameRV"
+                android:fontFamily="@font/allerta"
+                android:text="TextView"
+                android:textColor="@color/dark_salmon"
+                android:textStyle="bold"
+                tools:text="9 miles" />
 
-    <TextView
-        android:id="@+id/tvConditionRV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvItemNameRV"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvPriceRV"
-        android:text="TextView"
-        tools:text="Very Used" />
+            <TextView
+                android:id="@+id/tvPriceRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvItemNameRV"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/ivItemImageRV"
+                android:fontFamily="@font/allerta"
+                android:text="TextView"
+                tools:text="$25" />
 
-    <TextView
-        android:id="@+id/tvSizeRV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvItemNameRV"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvConditionRV"
-        android:text="TextView"
-        tools:text="M" />
+            <TextView
+                android:id="@+id/tvConditionRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvItemNameRV"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/tvPriceRV"
+                android:fontFamily="@font/allerta"
+                android:text="TextView"
+                tools:text="Very Used" />
 
-    <TextView
-        android:id="@+id/tvTypeRV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvItemNameRV"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvSizeRV"
-        android:text="TextView"
-        android:visibility="visible"
-        tools:text="Jacket" />
+            <TextView
+                android:id="@+id/tvSizeRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvItemNameRV"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/tvConditionRV"
+                android:fontFamily="@font/allerta"
+                android:text="TextView"
+                tools:text="M" />
+
+            <TextView
+                android:id="@+id/tvTypeRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvItemNameRV"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/tvSizeRV"
+                android:ellipsize="end"
+                android:fontFamily="@font/allerta"
+                android:maxLines="1"
+                android:text="TextView"
+                android:visibility="visible"
+                tools:text="Jacket" />
 
 
-    <TextView
-        android:id="@+id/tvSellerNameRV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPriceRV"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/ivItemImageRV"
-        android:text="TextView"
-        tools:text="Seller: Savitha Srinivasan" />
+            <TextView
+                android:id="@+id/tvSellerNameRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvPriceRV"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/ivItemImageRV"
+                android:ellipsize="end"
+                android:fontFamily="@font/allerta"
+                android:maxLines="1"
+                android:text="TextView"
+                tools:text="Seller: Savitha Srinivasan" />
 
-    <Button
-        android:id="@+id/btnBuyRv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvSellerNameRV"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="5dp"
-        android:text="Buy" />
+            <Button
+                android:id="@+id/btnBuyRv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSellerNameRV"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/allerta"
+                android:text="Buy" />
 
-    <TextView
-        android:id="@+id/tvBrandRV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvSellerNameRV"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="77dp"
-        android:layout_toStartOf="@+id/btnBuyRv"
-        android:layout_toEndOf="@+id/ivItemImageRV"
-        android:text="TextView"
-        tools:text="Brand: Attic Salt" />
+            <TextView
+                android:id="@+id/tvBrandRV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSellerNameRV"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toStartOf="@+id/btnBuyRv"
+                android:layout_toEndOf="@+id/ivItemImageRV"
+                android:ellipsize="end"
+                android:fontFamily="@font/allerta"
+                android:maxLines="1"
+                android:text="TextView"
+                tools:text="Brand: Attic Salt" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>

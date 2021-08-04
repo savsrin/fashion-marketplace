@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<androidx.cardview.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardViewSalesTransac"
         android:layout_gravity="center"
         android:layout_width="match_parent"
@@ -17,85 +17,91 @@
         app:cardBackgroundColor="@color/light_yellow"
         card_view:cardCornerRadius="4dp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivSalesTransacImage"
-            android:layout_width="125dp"
-            android:layout_height="125dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="5dp"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/tvSalesTransacTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@id/ivSalesTransacImage"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textStyle="bold"
-            tools:text="Black Mini Skirt" />
-
-        <TextView
-            android:id="@+id/tvPriceSalesTransac"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvSalesTransacTitle"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/tvcreatedAtSalesTransac"
-            android:text="List Price: $10" />
-
-        <TextView
-            android:id="@+id/tvcreatedAtSalesTransac"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvSalesTransacTitle"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/ivSalesTransacImage"
-            tools:text="Published 2 days ago" />
+            <TextView
+                android:id="@+id/tvSalesTransacTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/allerta"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                tools:text="Black Mini Skirt" />
 
 
-        <TextView
-            android:id="@+id/tvStatusSalesTransac"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btnCancelTransaction"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/ivSalesTransacImage"
-            android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="16sp"
-            android:textStyle="bold|italic"
-            tools:text="AVAILABLE" />
+            <ImageView
+                android:id="@+id/ivSalesTransacImage"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
 
-        <Button
-            android:id="@+id/btnConfirmPayment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvcreatedAtSalesTransac"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/ivSalesTransacImage"
-            android:text="MARK PAID" />
+                android:layout_below="@id/tvSalesTransacTitle"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="5dp"
+                tools:srcCompat="@tools:sample/avatars" />
 
-        <Button
-           android:id="@+id/btnCancelTransaction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvcreatedAtSalesTransac"
-            android:layout_marginStart="15dp"
-            android:layout_toEndOf="@id/btnConfirmPayment"
-           android:text="CANCEL" />
+            <ImageView
+                android:id="@+id/ivIconStatus"
+                android:layout_width="75dp"
+                android:layout_height="125dp"
 
-    </RelativeLayout>
+                android:layout_below="@id/tvSalesTransacTitle"
+                android:layout_toEndOf="@id/ivSalesTransacImage"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvStatusSalesTransac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSalesTransacTitle"
+                android:layout_alignStart="@id/ivIconStatus"
+                android:layout_alignTop="@id/ivIconStatus"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/ivSalesTransacImage"
+                android:fontFamily="@font/allerta"
+                android:text="TextView"
+                android:textStyle="bold"
+                tools:text="AVAILABLE" />
+
+            <Button
+                android:id="@+id/btnConfirmPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvStatusSalesTransac"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/ivIconStatus"
+                android:text="MARK PAID" />
+
+            <Button
+                android:id="@+id/btnCancelTransaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnConfirmPayment"
+                android:layout_alignStart="@id/btnConfirmPayment"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/ivIconStatus"
+                android:fontFamily="@font/allerta"
+                android:text="CANCEL" />
+
+            <TextView
+                android:id="@+id/tvSalesPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvSalesTransacTitle"
+                android:layout_alignStart="@id/btnConfirmPayment"
+                android:layout_alignTop="@id/tvStatusSalesTransac"
+                android:layout_toEndOf="@id/tvStatusSalesTransac"
+                android:fontFamily="@font/allerta"
+                android:text="TextView"
+                tools:text="List price: $12.00" />
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
