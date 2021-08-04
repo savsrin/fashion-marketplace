@@ -1,14 +1,20 @@
 package com.example.personalproject.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.gesture.Gesture;
 import android.graphics.Color;
+import android.os.Handler;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +30,11 @@ import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
+import com.skydoves.balloon.ArrowOrientation;
+import com.skydoves.balloon.Balloon;
+import com.skydoves.balloon.BalloonAnimation;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -99,16 +110,56 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
         items.add(itemToAdd);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener{
         ItemSaleTransactionBinding itemSaleTransactionBinding;
+        Balloon balloon;
 
         public ViewHolder(@NonNull ItemSaleTransactionBinding itemSaleTransactionBinding) {
             super(itemSaleTransactionBinding.getRoot());
             this.itemSaleTransactionBinding = itemSaleTransactionBinding;
+            itemSaleTransactionBinding.getRoot().setOnLongClickListener(this);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            int position = getAdapterPosition();
+            Log.i(TAG, "In on long Click");
+            if (position != -1) {
+                Item item = items.get(position);
+                if (item.getStatus() == Item.PENDING) {
+                    balloon = new Balloon.Builder(context.getApplicationContext())
+                            .setArrowSize(20)
+                            .setArrowOrientation(ArrowOrientation.TOP)
+                            .setIsVisibleArrow(true)
+                            .setArrowPosition(0.9f)
+                            .setWidthRatio(1.0f)
+                            .setHeight(200)
+                            .setTextSize(20f)
+                            .setCornerRadius(4f)
+                            .setAlpha(0.9f)
+                            .setText("Buyer Contact Information: \n" +
+                                     "Name: " +   item.getTransaction().getBuyer().get("name") + "\n" +
+                                     "Phone Number: " + item.getTransaction().getBuyerPhone() + "\n" +
+                                    "Email: " + item.getTransaction().getBuyerEmail())
+                            .setTextColor(ContextCompat.getColor(context.getApplicationContext(),
+                                    R.color.white))
+                            .setBackgroundColor(ContextCompat.getColor(context.getApplicationContext(),
+                                    R.color.dark_salmon))
+                            .setBalloonAnimation(BalloonAnimation.FADE)
+                            .build();
+                    balloon.showAlignBottom(itemSaleTransactionBinding.cardViewSalesTransac);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            balloon.dismiss();
+                        }
+                    }, 5000);
+                }
+            }
+            return true;
         }
 
         public void bind(Item item) {
-            setBackgroundColor(item);
             itemSaleTransactionBinding.tvSalesTransacTitle.setText(item.getDisplayName());
             itemSaleTransactionBinding.tvPriceSalesTransac.setText("List Price: $"
                                                                     + item.getPrice().toString());
@@ -118,7 +169,6 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
             }
             if (item.getStatus() == Item.PENDING) {
                 initPendingItemView(item);
-
             } else {
                 initNonPendingItemView(item);
             }
@@ -151,10 +201,6 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
             itemSaleTransactionBinding.btnCancelTransaction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /* TODO: change item status to available, remove transaction from item, &
-                            delete transaction; Note that the UI is updated when the live subscription
-                            gets an update notification.
-                     */
                     item.cancelSale().continueWith(new Continuation<Item, Void>() {
                         @Override
                         public Void then(Task<Item> task) throws Exception {
@@ -179,44 +225,21 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
         }
 
         private void initPendingItemView(Item item) {
-            itemSaleTransactionBinding.tvBuyerEmail.setText("Email"
-                    + item.getTransaction().getBuyerEmail());
-            itemSaleTransactionBinding.tvBuyerName.setText("Name: "
-                    + item.getTransaction().getBuyer().get("name"));
-            itemSaleTransactionBinding.tvBuyerPhoneSalesTransac.setText("Phone: "
-                    + item.getTransaction().getBuyerPhone());
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.VISIBLE);
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.VISIBLE);
-            itemSaleTransactionBinding.tvBuyerEmail.setVisibility(View.VISIBLE);
-            itemSaleTransactionBinding.tvBuyerName.setVisibility(View.VISIBLE);
-            itemSaleTransactionBinding.tvBuyerPhoneSalesTransac.setVisibility(View.VISIBLE);
+            itemSaleTransactionBinding.tvStatusSalesTransac.setText("PENDING");
         }
 
         private void initNonPendingItemView(Item item) {
             itemSaleTransactionBinding.btnCancelTransaction.setVisibility(View.INVISIBLE);
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.INVISIBLE);
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.INVISIBLE);
-            itemSaleTransactionBinding.tvBuyerDetails.setVisibility(View.INVISIBLE);
-            itemSaleTransactionBinding.tvBuyerEmail.setVisibility(View.INVISIBLE);
-            itemSaleTransactionBinding.tvBuyerName.setVisibility(View.INVISIBLE);
-            itemSaleTransactionBinding.tvBuyerPhoneSalesTransac.setVisibility(View.INVISIBLE);
-        }
-
-        private void setBackgroundColor(Item item) {
             if (item.getStatus() == Item.AVAILABLE) {
-                itemSaleTransactionBinding.cardViewSalesTransac
-                        .setCardBackgroundColor(Color.parseColor("#C7F09D"));
                 itemSaleTransactionBinding.tvStatusSalesTransac.setText("AVAILABLE");
-            } else if (item.getStatus() == Item.PENDING) {
-                itemSaleTransactionBinding.cardViewSalesTransac
-                        .setCardBackgroundColor(Color.parseColor("#F0F09D"));
-                itemSaleTransactionBinding.tvStatusSalesTransac.setText("PENDING");
-            } else {
-                itemSaleTransactionBinding.cardViewSalesTransac
-                        .setCardBackgroundColor(Color.parseColor("#F09D9D"));
+            } else{
                 itemSaleTransactionBinding.tvStatusSalesTransac.setText("SOLD");
-
             }
         }
+
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,8 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:background="@color/light_yellow"
+        app:cardBackgroundColor="@color/light_yellow"
         card_view:cardCornerRadius="4dp">
-
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +28,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="3dp"
-            android:layout_marginTop="29dp"
+            android:layout_marginTop="5dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -61,81 +63,37 @@
             android:layout_toEndOf="@id/ivSalesTransacImage"
             tools:text="Published 2 days ago" />
 
+
         <TextView
             android:id="@+id/tvStatusSalesTransac"
-            android:layout_width="97dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="-36dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="7dp"
+            android:layout_below="@id/btnCancelTransaction"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/ivSalesTransacImage"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#232222"
             android:textSize="16sp"
             android:textStyle="bold|italic"
-            tools:text="PENDING" />
-
-        <TextView
-            android:id="@+id/tvBuyerDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvcreatedAtSalesTransac"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="1dp"
-            android:layout_toEndOf="@id/ivSalesTransacImage"
-            android:text="Buyer Details:"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvBuyerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvBuyerDetails"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/ivSalesTransacImage"
-            tools:text="Name: Savitha S." />
-
-        <TextView
-            android:id="@+id/tvBuyerEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvBuyerName"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/ivSalesTransacImage"
-            tools:text="Email: savsrin@gmail.com" />
-
-
-        <TextView
-            android:id="@+id/tvBuyerPhoneSalesTransac"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvBuyerDetails"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/tvBuyerName"
-            tools:text="Phone: 425-533-8888" />
+            tools:text="AVAILABLE" />
 
         <Button
             android:id="@+id/btnConfirmPayment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvBuyerEmail"
+            android:layout_below="@id/tvcreatedAtSalesTransac"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/ivSalesTransacImage"
             android:text="MARK PAID" />
 
         <Button
-            android:id="@+id/btnCancelTransaction"
+           android:id="@+id/btnCancelTransaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvBuyerEmail"
+            android:layout_below="@id/tvcreatedAtSalesTransac"
             android:layout_marginStart="15dp"
             android:layout_toEndOf="@id/btnConfirmPayment"
-            android:text="CANCEL" />
-
-
+           android:text="CANCEL" />
 
     </RelativeLayout>
     </androidx.cardview.widget.CardView>
