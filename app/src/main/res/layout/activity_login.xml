@@ -6,27 +6,42 @@
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:layout_margin="16dp"
+    android:background="#00000000"
     android:orientation="vertical"
     tools:context=".activities.LoginActivity">
 
+    <TextView
+        android:id="@+id/tvTitleLogin"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="instathrift"
+        android:textAlignment="center"
+        android:textAppearance="@style/CustomActionBarTitle"
+        android:textColor="@color/dark_salmon"
+        android:textSize="48sp" />
 
     <EditText
         android:id="@+id/etUsername"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitleLogin"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="Username" />
+        android:hint="Username"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_below="@id/etUsername"
+        android:layout_weight="1"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -34,17 +49,25 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etPassword"
         android:layout_weight="1"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="@color/dark_salmon"
         android:text="log in " />
+
+    <TextView
+        android:id="@+id/tvOr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnLogin"
+        android:text="OR"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnCreateAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnLogin"
+        android:layout_below="@id/tvOr"
         android:layout_weight="1"
-        android:backgroundTint="#4CAF50"
         android:text="create an account" />
-
 
 </RelativeLayout>

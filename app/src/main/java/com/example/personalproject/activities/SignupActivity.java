@@ -1,5 +1,5 @@
 package com.example.personalproject.activities;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -37,11 +37,20 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("instathrift");
+
+        if (getIntent().getExtras() != null) {
+            username = getIntent().getStringExtra("username");
+            password = getIntent().getStringExtra("password");
+        } else {
+            Log.i(TAG, "Bundle is null");
+        }
+
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = binding.etUsernameSignup.getText().toString();
-                password = binding.etPasswordSignup.getText().toString();
                 email = binding.etEmailSignup.getText().toString();
                 name = binding.etNameSignup.getText().toString();
                 chest_measurement = binding.etChestSignup.getText().toString();

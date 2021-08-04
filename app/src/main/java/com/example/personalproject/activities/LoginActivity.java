@@ -1,5 +1,6 @@
 package com.example.personalproject.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,14 +24,31 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+
         if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
         }
+
 
         binding.btnCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                Bundle bundle = new Bundle();
+                String username = binding.etUsername.getText().toString();
+                String password =  binding.etPassword.getText().toString();
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this,
+                            "You must provide a username and password.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                bundle.putString("username", username);
+                bundle.putString("password", password);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }
@@ -40,8 +58,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick Login button");
-                loginUser(binding.etUsername.getText().toString()
-                        , binding.etPassword.getText().toString());
+                String username = binding.etUsername.getText().toString();
+                String password =  binding.etPassword.getText().toString();
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(LoginActivity.this,
+                            "You must provide a username and password.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                loginUser(username, password);
             }
         });
     }

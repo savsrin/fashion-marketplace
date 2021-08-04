@@ -9,7 +9,6 @@
     android:layout_centerInParent="true"
     tools:context=".activities.SignupActivity">
 
-
     <TextView
         android:id="@+id/tvWelcome"
         android:layout_width="match_parent"
@@ -21,29 +20,29 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="1dp"
-        android:text="Welcome!"
-        android:textAlignment="viewStart"
+        android:fontFamily="@font/baumans"
+        android:text="Create an account"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/dark_salmon"
+        android:textSize="34sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvBasicInfo"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:srcCompat="@drawable/account_circle"
         android:layout_below="@id/tvWelcome"
-        android:text="Basic Information"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
-
+        android:id="@+id/ivProfile"/>
 
     <EditText
         android:id="@+id/etNameSignup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvBasicInfo"
+        android:layout_below="@id/ivProfile"
         android:layout_marginTop="10dp"
         android:hint="Name"
-        android:textAlignment="viewStart" />
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/etEmailSignup"
@@ -53,35 +52,17 @@
         android:layout_marginTop="10dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textAlignment="viewStart" />
-
-    <EditText
-        android:id="@+id/etUsernameSignup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etEmailSignup"
-        android:layout_marginTop="10dp"
-        android:hint="Username"
-        android:textAlignment="viewStart" />
-
-
-    <EditText
-        android:id="@+id/etPasswordSignup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etUsernameSignup"
-        android:layout_marginTop="10dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:textAlignment="viewStart" />
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/tvSizingInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/etPasswordSignup"
-        android:text="Sizing Information"
+        android:layout_below="@id/etEmailSignup"
         android:layout_marginTop="20dp"
+        android:textColor="@color/dark_salmon"
+        android:text="Sizing Information"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold" />
 
@@ -93,8 +74,8 @@
         android:layout_marginTop="10dp"
         android:hint="@string/height"
         android:numeric="decimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <EditText
         android:id="@+id/etChestSignup"
@@ -106,8 +87,8 @@
         android:layout_toEndOf="@id/etHeightSignup"
         android:hint="@string/chest"
         android:numeric="decimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <EditText
         android:id="@+id/etWaistSignup"
@@ -119,8 +100,8 @@
         android:layout_toEndOf="@id/etChestSignup"
         android:hint="@string/waist"
         android:numeric="decimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 
     <EditText
@@ -133,8 +114,8 @@
         android:layout_toEndOf="@id/etWaistSignup"
         android:hint="@string/hip_inches"
         android:numeric="decimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <EditText
         android:id="@+id/etWeightSignup"
@@ -145,11 +126,9 @@
         android:layout_marginTop="10dp"
         android:hint="@string/weight_lb"
         android:numeric="decimal"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
-
-
-
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
@@ -157,13 +136,6 @@
         android:layout_weight="1"
         android:layout_marginTop="35dp"
         android:layout_below="@id/etWeightSignup"
-        android:backgroundTint="#4CAF50"
         android:text="sign up" />
-
-
-
-
-
-
 
 </RelativeLayout>
