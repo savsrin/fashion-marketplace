@@ -1,6 +1,7 @@
 package com.example.personalproject.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,8 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.personalproject.R;
 import com.example.personalproject.databinding.ActivityMainBinding;
@@ -23,13 +26,16 @@ import com.parse.ParseUser;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     ActivityMainBinding binding;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         final FragmentManager fragmentManager = getSupportFragmentManager();
         setContentView(binding.getRoot());
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("instathrift");
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -59,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
         // Set default selection
         binding.bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
-
 }
