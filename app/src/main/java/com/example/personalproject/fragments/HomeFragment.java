@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000; /* 2 sec */
     boolean filterMeasurement = false;
-    
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -111,6 +111,7 @@ public class HomeFragment extends Fragment {
         adapter = new HomeItemsAdapter(getActivity(), items);
         binding.rvItemsHome.setAdapter(adapter);
         binding.rvItemsHome.setLayoutManager(new LinearLayoutManager(getActivity()));
+        initLoadingView();
         initSearchWidget();
         return binding.getRoot();
     }
@@ -265,6 +266,7 @@ public class HomeFragment extends Fragment {
                 items.clear(); // TODO: add check for pagination and don't clear in that case
                 items.addAll(itemsFound);
                 adapter.notifyDataSetChanged();
+                initLoadedView();
                 Log.i(TAG, "finished querying posts");
             }
         });
@@ -398,6 +400,24 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
+    }
+    
+    private void initLoadingView() {
+        binding.locationLoadingAnim.playAnimation();
+        binding.locationLoadingAnim.setVisibility(View.VISIBLE);
+        binding.tvLocationLoading.setVisibility(View.VISIBLE);
+        binding.cbFilterMeasurement.setVisibility(View.INVISIBLE);
+        binding.svItemHome.setVisibility((View.INVISIBLE));
+        binding.rvItemsHome.setVisibility(View.INVISIBLE);
+    }
+
+    private void initLoadedView() {
+        binding.locationLoadingAnim.pauseAnimation();
+        binding.locationLoadingAnim.setVisibility(View.INVISIBLE);
+        binding.tvLocationLoading.setVisibility(View.INVISIBLE);
+        binding.cbFilterMeasurement.setVisibility(View.VISIBLE);
+        binding.svItemHome.setVisibility((View.VISIBLE));
+        binding.rvItemsHome.setVisibility(View.VISIBLE);
     }
 }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,13 +9,11 @@
     tools:context=".fragments.HomeFragment">
 
     <SearchView
+        android:id="@+id/svItemHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/svItemHome"
-        android:iconifiedByDefault="false"
-       >
-
-    </SearchView>
+        android:background="@color/tea_green"
+        android:iconifiedByDefault="false"></SearchView>
 
     <CheckBox
         android:id="@+id/cbFilterMeasurement"
@@ -23,8 +22,13 @@
         android:layout_below="@id/svItemHome"
         android:layout_centerHorizontal="true"
         android:layout_weight="1"
+        android:buttonTint="@color/dark_salmon"
         android:checked="false"
-        android:text="Filter items by my measurements" />
+        android:fontFamily="@font/baumans"
+        android:text="filter items by my measurements"
+        android:textColor="@color/dark_salmon"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -35,4 +39,29 @@
         android:layout_below="@id/cbFilterMeasurement"
         android:padding="8dp" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/locationLoadingAnim"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="8dp"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="18199-location-pin-on-a-map.json"
+        app:lottie_loop="false"
+        app:lottie_speed="1.25" />
+
+    <TextView
+        android:id="@+id/tvLocationLoading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/locationLoadingAnim"
+        android:fontFamily="@font/baumans"
+        android:text="finding clothes near you..."
+        android:textAlignment="center"
+        android:textColor="@color/dark_salmon"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 </RelativeLayout>
