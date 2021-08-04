@@ -15,7 +15,7 @@
         <item>Used: Excellent </item>
         <item>Used: Good</item>
         <item>Used: Fair</item>
-        <item>Very Used</item>
+        <item>Used: Very</item>
     </string-array>
 
     <string-array name="sizing_array">

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/architects_daughter</item>
+        <item>@font/asap</item>
+        <item>@font/baumans</item>
+        <item>@font/cherry_cream_soda</item>
+        <item>@font/delius_unicase</item>
+        <item>@font/fira_mono_medium</item>
+        <item>@font/itim</item>
+        <item>@font/nova_square</item>
+    </array>
+</resources>
