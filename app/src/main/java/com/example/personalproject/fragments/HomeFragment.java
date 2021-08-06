@@ -226,7 +226,7 @@ public class HomeFragment extends Fragment {
                 location.getLatitude() + "," +
                 location.getLongitude();
         if (getActivity() != null) {
-            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+            Log.i(TAG, msg);
         }
         Log.i(TAG, "calling query items");
         initQuery();
@@ -235,7 +235,7 @@ public class HomeFragment extends Fragment {
     public void queryItems(ParseGeoPoint buyerLocation,
                            UserMeasurement buyerMeasurement) {
         ParseQuery<Item> query = ParseQuery.getQuery(Item.class);
-        query.include(Item.KEY_SELLER);
+        query.include("seller.measurement");
 
         if (filterMeasurement) {
             // return items with sellers who have measurements within a small radius of the buyer's
@@ -375,7 +375,37 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void done(ParseObject object, ParseException e) {
                                     Log.i(TAG, "Seller fetched in enter event.");
-                                    adapter.onItemAdded(addedItem);
+                                    addedItem.getSeller().getParseObject("measurement").fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                                        @Override
+                                        public void done(ParseObject object, ParseException e) {
+                                            adapter.onItemAdded(addedItem);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, new SubscriptionHandling.HandleEventCallback<Item>() {
+                @Override
+                public void onEvent(ParseQuery<Item> query, Item addedItem) {
+                    Log.i(TAG, "Added Item Object Id: " + addedItem.getObjectId());
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable() {
+                        public void run() {
+                            Log.i(TAG, "in main looper, CREATE event");
+                            addedItem.getParseObject("seller").fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject object, ParseException e) {
+                                    Log.i(TAG, "Seller fetched in CREATE event.");
+                                    addedItem.getSeller().getParseObject("measurement").fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                                        @Override
+                                        public void done(ParseObject object, ParseException e) {
+                                            adapter.onItemAdded(addedItem);
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -401,7 +431,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    
+
     private void initLoadingView() {
         binding.locationLoadingAnim.playAnimation();
         binding.locationLoadingAnim.setVisibility(View.VISIBLE);
