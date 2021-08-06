@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.parse.DeleteCallback;
@@ -19,6 +20,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,6 +50,7 @@ public class Item extends ParseObject {
     public static final String KEY_SELLER = "seller";
     public static final String KEY_STATUS = "status";
     public static final String KEY_TRANSACTION = "transaction";
+    public static final String KEY_ADDRESS = "address";
 
     public String getDescription() {return getString(KEY_DESCRIPTION);}
     public String getSize() {return getString(KEY_SIZE);}
@@ -60,6 +64,7 @@ public class Item extends ParseObject {
     public ParseUser getSeller() {return getParseUser(KEY_SELLER);}
     public @Nullable Transaction getTransaction() {return (Transaction) getParseObject(KEY_TRANSACTION);}
     public Integer getStatus() {return getInt(KEY_STATUS);}
+    public String getAddress() {return  getString(KEY_ADDRESS);}
 
     public void setDescription(String description) {put(KEY_DESCRIPTION, description );}
     public void setSize(String size) {put(KEY_SIZE, size);}
@@ -73,6 +78,9 @@ public class Item extends ParseObject {
     public void setSeller(ParseUser seller) { put(KEY_SELLER,seller); }
     public void setTransaction(@Nullable Transaction transaction) {put(KEY_TRANSACTION, transaction);}
     public void setStatus(Integer status) {put(KEY_STATUS, status);}
+    public void setAddress(String address) {put(KEY_ADDRESS, address);}
+
+
 
     public Task<Item> purchase(String buyerEmail, String buyerPhone) {
         Transaction transaction = new Transaction();

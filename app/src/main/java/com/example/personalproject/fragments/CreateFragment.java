@@ -48,6 +48,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * This fragment contains the implementation for a user to upload a clothing item
  * that they wish to sell to the marketplace.
@@ -65,6 +67,7 @@ public class CreateFragment extends Fragment {
     private String condition;
     private String type;
     private File photoFile;
+    private String address;
     // this is cached after each submission
     private ParseGeoPoint pickupLocation;
 
@@ -95,13 +98,14 @@ public class CreateFragment extends Fragment {
         // set up location autocomplete fragment
         autocompleteFragment = (AutocompleteSupportFragment)
                 getChildFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS));
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() +"," + place.getLatLng());
                 pickupLocation = new ParseGeoPoint(place.getLatLng().latitude, place.getLatLng().longitude);
+                address = place.getAddress();
             }
 
             @Override
@@ -271,23 +275,23 @@ public class CreateFragment extends Fragment {
                         || size.isEmpty()
                         || pickupLocation == null
                  ) {
-                    Toast.makeText(getContext(),
+                    Toasty.error(getContext(),
                             "You have left one or more required fields empty. " +
                                     "Please enter all information.",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT, true).show();
                     return;
                 }
 
                 Double price = Double.parseDouble(priceString);
                 if(price <= 0 ) {
-                    Toast.makeText(getContext(),
+                    Toasty.error(getContext(),
                             "You have entered an invalid price",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT, true).show();
                     return;
                 }
 
                 if (photoFile == null || binding.ivItemImage.getDrawable() == null) {
-                    Toast.makeText(getContext(), "You must submit an image!", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getContext(), "You must submit an image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -318,12 +322,13 @@ public class CreateFragment extends Fragment {
         item.setPrice(price);
         item.setSeller(currentUser);
         item.setStatus(Item.AVAILABLE);
+        item.setAddress(address);
         item.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e !=null) {
                     Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(getContext(), "error while saving.", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getContext(), "error while saving.", Toast.LENGTH_SHORT, true).show();
                     return;
                 }
                 Log.i(TAG, "Item save was successful!");
