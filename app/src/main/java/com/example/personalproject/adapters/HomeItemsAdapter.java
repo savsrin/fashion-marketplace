@@ -5,21 +5,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.personalproject.R;
 import com.example.personalproject.activities.TransactionActivity;
 import com.example.personalproject.databinding.ItemClothingBinding;
+import com.example.personalproject.databinding.ItemDetailsPopupBinding;
 import com.example.personalproject.models.Item;
 import com.example.personalproject.models.Transaction;
+import com.example.personalproject.models.UserMeasurement;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -170,12 +176,13 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
         return  false;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         ItemClothingBinding itemClothingBinding;
 
         public ViewHolder(@NonNull ItemClothingBinding itemClothingBinding) {
             super(itemClothingBinding.getRoot());
             this.itemClothingBinding = itemClothingBinding;
+            itemClothingBinding.getRoot().setOnLongClickListener(this);
         }
 
         public void bind(Item item) {
@@ -196,7 +203,7 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
             Double distanceToSeller = item.getPickupLocation()
                                             .distanceInMilesTo(currentBuyerLocation);
             distanceToSeller = round(distanceToSeller, 2);
-            itemClothingBinding.tvSellerDistanceRV.setText(distanceToSeller.toString() + " miles");
+            itemClothingBinding.tvSellerDistanceRV.setText(distanceToSeller.toString() + " mi.");
 
             itemClothingBinding.btnBuyRv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -219,8 +226,46 @@ public class HomeItemsAdapter extends RecyclerView.Adapter<HomeItemsAdapter.View
         }
 
         @Override
-        public void onClick(View v) {
-            // TODO: navigate to item details activity
+        public boolean onLongClick(View v) {
+            int position = getAdapterPosition();
+            if (position != -1 ) {
+                Item item = items.get(position);
+                ItemDetailsPopupBinding bindingPopup = ItemDetailsPopupBinding.inflate(LayoutInflater.from(context));
+                View view = bindingPopup.getRoot();
+                ParseFile image = item.getPhoto();
+                if (image != null) {
+                    Glide.with(context).load(image.getUrl()).into(bindingPopup.ivItemDetails);
+                }
+                bindingPopup.tvItemDetailsTitle.setText(item.getDisplayName());
+                UserMeasurement sellerMeasurement = (UserMeasurement) item.getSeller().get("measurement");
+                UserMeasurement buyerMeasurement = (UserMeasurement) ParseUser.getCurrentUser().get("measurement");
+
+                bindingPopup.tvSellerMeasurements.setText(String.format(
+                        "Height: %s\" Weight: %s lb Chest: %s\"\nWaist: %s\" Hips: \"%s",
+                        sellerMeasurement.getHeight(),
+                        sellerMeasurement.getWeight(),
+                        sellerMeasurement.getChest(),
+                        sellerMeasurement.getWaist(),
+                        sellerMeasurement.getHip()));
+
+                bindingPopup.tvBuyerMeasurements.setText(String.format(
+                        "Height: %s\" Weight: %s lb Chest: %s\"\nWaist: %s\" Hips: %s\"",
+                        buyerMeasurement.getHeight(),
+                        buyerMeasurement.getWeight(),
+                        buyerMeasurement.getChest(),
+                        buyerMeasurement.getWaist(),
+                        buyerMeasurement.getHip()));
+                bindingPopup.itemDescription.setText("Seller Description: " + item.getDescription());
+                bindingPopup.tvbrandItemDetails.setText("Brand: " + item.getItemBrand());
+
+                PopupWindow popupWindow = new PopupWindow(view,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        true);
+                popupWindow.setBackgroundDrawable(AppCompatResources.getDrawable(context, R.drawable.popup_background));
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+            }
+            return true;
         }
     }
 }
