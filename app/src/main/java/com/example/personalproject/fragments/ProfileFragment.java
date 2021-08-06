@@ -16,6 +16,8 @@ import com.example.personalproject.R;
 import com.example.personalproject.activities.LoginActivity;
 import com.example.personalproject.activities.MainActivity;
 import com.example.personalproject.databinding.FragmentProfileBinding;
+import com.example.personalproject.models.UserMeasurement;
+import com.parse.Parse;
 import com.parse.ParseUser;
 
 /**
@@ -50,6 +52,16 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.tvEmailProfile.setText(ParseUser.getCurrentUser().getEmail());
+        binding.tvNameProfile.setText(ParseUser.getCurrentUser().getString("name"));
+        binding.tvUsernameProfile.setText("@" + ParseUser.getCurrentUser().getUsername());
+        UserMeasurement measurement = (UserMeasurement) ParseUser.getCurrentUser().get("measurement");
+        binding.etChestProfile.setText(measurement.getChest() + "\"");
+        binding.etHeightProfile.setText(measurement.getHeight() + "\"");
+        binding.etHipProfile.setText(measurement.getHip() + "\"");
+        binding.etWaistProfile.setText(measurement.getWaist() + "\"");
+        binding.etWeightProfile.setText(measurement.getWeight() + "lb");
+
         binding.btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
