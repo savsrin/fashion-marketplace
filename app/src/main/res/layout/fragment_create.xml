@@ -17,7 +17,9 @@
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
         android:ems="10"
+        android:fontFamily="@font/allerta"
         android:hint="Item Name"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -28,7 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ivItemImage"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
         android:text="Item Pickup Location"
+        android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -46,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etItemName"
         android:ems="10"
+        android:fontFamily="@font/allerta"
         android:text="Take Item Picture" />
 
     <ImageView
@@ -61,7 +66,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/autocomplete_fragment"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
         android:text="Item Details"
+        android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -70,10 +77,12 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvItemDetails"
-        android:hint="Price ($)"
         android:ems="10"
+        android:fontFamily="@font/allerta"
+        android:hint="Price ($)"
         android:inputType="numberDecimal"
-        />
+        android:singleLine="true"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/etBrand"
@@ -83,8 +92,11 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@id/etPrice"
         android:ems="10"
+        android:fontFamily="@font/allerta"
         android:hint="Brand"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAlignment="center" />
 
 
     <EditText
@@ -93,8 +105,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etPrice"
         android:ems="10"
+        android:fontFamily="@font/allerta"
         android:hint="Item description (sizing, measurements, etc.)"
-        />
+        android:textAlignment="center" />
 
 
     <Spinner
@@ -121,11 +134,12 @@
         android:layout_below="@id/itemSizeSpinner" />
 
     <Button
-        android:id = "@+id/btnSubmit"
-        android:layout_marginTop="10dp"
+        android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/itemTypeSpinner"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
         android:text="Publish" />
 
 </RelativeLayout>

@@ -26,6 +26,7 @@
                 android:layout_width="125dp"
                 android:layout_height="125dp"
                 android:layout_below="@id/tvPurchaseTransacTitle"
+                android:layout_toEndOf="@id/ivPurchaseStatus"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
@@ -33,8 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/ivPurchaseTransacImage"
                 android:fontFamily="@font/allerta"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textStyle="bold"
                 tools:text="Black Mini Skirt" />
@@ -46,7 +47,7 @@
                 android:layout_below="@id/tvPurchaseTransacTitle"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@id/ivPurchaseStatus"
+                android:layout_toEndOf="@id/ivPurchaseTransacImage"
                 android:text="List Price: $10"
                 android:textStyle="bold" />
 
@@ -57,7 +58,7 @@
                 android:layout_below="@id/tvPricePurchaseTransac"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
-                android:layout_toEndOf="@id/ivPurchaseStatus"
+                android:layout_toEndOf="@id/ivPurchaseTransacImage"
                 android:fontFamily="@font/allerta"
                 android:textStyle="bold"
                 tools:text="Seller: @savitha" />
@@ -67,7 +68,6 @@
                 android:layout_width="75dp"
                 android:layout_height="125dp"
                 android:layout_below="@id/tvPurchaseTransacTitle"
-                android:layout_toEndOf="@id/ivPurchaseTransacImage"
                 android:layout_margin="15dp"
                 tools:srcCompat="@tools:sample/avatars" />
 

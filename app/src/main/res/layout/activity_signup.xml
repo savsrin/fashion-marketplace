@@ -20,7 +20,7 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="1dp"
-        android:fontFamily="@font/baumans"
+        android:fontFamily="@font/allerta"
         android:text="Create an account"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -41,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ivProfile"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
         android:hint="Name"
         android:textAlignment="center" />
 
@@ -50,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etNameSignup"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:textAlignment="center" />
@@ -60,10 +62,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etEmailSignup"
         android:layout_marginTop="20dp"
-        android:textColor="@color/dark_salmon"
+        android:fontFamily="@font/allerta"
         android:text="Sizing Information"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/dark_salmon"
         android:textStyle="bold" />
 
     <EditText
@@ -72,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvSizingInfo"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
         android:hint="@string/height"
         android:numeric="decimal"
         android:textAlignment="center"
@@ -85,6 +89,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/etHeightSignup"
+        android:fontFamily="@font/allerta"
         android:hint="@string/chest"
         android:numeric="decimal"
         android:textAlignment="center"
@@ -98,6 +103,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/etChestSignup"
+        android:fontFamily="@font/allerta"
         android:hint="@string/waist"
         android:numeric="decimal"
         android:textAlignment="center"
@@ -112,6 +118,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/etWaistSignup"
+        android:fontFamily="@font/allerta"
         android:hint="@string/hip_inches"
         android:numeric="decimal"
         android:textAlignment="center"
@@ -124,18 +131,20 @@
         android:layout_below="@id/etHeightSignup"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
         android:hint="@string/weight_lb"
         android:numeric="decimal"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-    
+
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="35dp"
         android:layout_below="@id/etWeightSignup"
+        android:layout_marginTop="35dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/allerta"
         android:text="sign up" />
 
 </RelativeLayout>

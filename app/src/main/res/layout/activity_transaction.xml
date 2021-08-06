@@ -11,18 +11,19 @@
 
     <EditText
         android:id="@+id/etPhoneBuy"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/etEmailBuy"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="0dp"
         android:ems="10"
-        android:layout_below="@id/etEmailBuy"
+        android:fontFamily="@font/allerta"
         android:hint="Phone Number"
         android:inputType="phone"
-        android:textSize="16sp"
-        />
+        android:textAlignment="center"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvContactInfoTrans"
@@ -31,31 +32,36 @@
         android:layout_below="@id/tvSellerTrans"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="40dp"
-        android:text="Please enter your contact information for this transaction."
-        android:textSize="16sp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/allerta"
+        android:text="Enter your contact information for this transaction."
+        android:textAlignment="center"
+        android:textColor="@color/dark_salmon"
+        android:textSize="14sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvSellerTrans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ivTransPhoto"
         android:layout_alignParentStart="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="5dp"
-        android:layout_below="@id/ivTransPhoto"
+        android:fontFamily="@font/allerta"
         android:textAlignment="viewStart"
         android:textStyle="bold"
         tools:text="Seller: @savitha" />
 
     <TextView
         android:id="@+id/tvPriceTrans"
-        android:layout_toEndOf="@id/tvSellerTrans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivTransPhoto"
         android:layout_marginStart="30dp"
         android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/tvSellerTrans"
+        android:fontFamily="@font/allerta"
         android:textAlignment="viewStart"
         android:textStyle="bold"
         tools:text="Price: $20.42" />
@@ -65,38 +71,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivTransPhoto"
-        android:layout_toEndOf="@id/tvPriceTrans"
         android:layout_marginStart="30dp"
         android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/tvPriceTrans"
+        android:fontFamily="@font/allerta"
         android:textAlignment="viewStart"
         android:textStyle="bold"
         tools:text="Size: M" />
 
     <EditText
         android:id="@+id/etEmailBuy"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tvContactInfoTrans"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_below="@id/tvContactInfoTrans"
         android:layout_marginTop="15dp"
         android:ems="10"
+        android:fontFamily="@font/allerta"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:textAlignment="center"
         android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvPurchaseConf"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
         android:text="Confirm Your Purchase Request"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/dark_salmon"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
@@ -105,6 +117,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvPurchaseConf"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
+        android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="Black Miniskirt" />
@@ -124,8 +138,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/etPhoneBuy"
-        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:fontFamily="@font/allerta"
         android:text="Submit Request" />
 
 

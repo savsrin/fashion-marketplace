@@ -38,10 +38,11 @@
                 android:id="@+id/ivSalesTransacImage"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
+                android:layout_toEndOf="@id/ivIconStatus"
 
                 android:layout_below="@id/tvSalesTransacTitle"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="4dp"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <ImageView
@@ -50,7 +51,6 @@
                 android:layout_height="125dp"
 
                 android:layout_below="@id/tvSalesTransacTitle"
-                android:layout_toEndOf="@id/ivSalesTransacImage"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -76,7 +76,7 @@
                 android:layout_below="@id/tvStatusSalesTransac"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="0dp"
-                android:layout_toEndOf="@id/ivIconStatus"
+                android:layout_toEndOf="@id/ivSalesTransacImage"
                 android:text="MARK PAID" />
 
             <Button
@@ -86,7 +86,7 @@
                 android:layout_below="@id/btnConfirmPayment"
                 android:layout_alignStart="@id/btnConfirmPayment"
                 android:layout_marginStart="15dp"
-                android:layout_toEndOf="@id/ivIconStatus"
+                android:layout_toEndOf="@id/ivSalesTransacImage"
                 android:fontFamily="@font/allerta"
                 android:text="CANCEL" />
 
