@@ -14,6 +14,8 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
@@ -41,9 +43,9 @@ public class LoginActivity extends AppCompatActivity {
                 String username = binding.etUsername.getText().toString();
                 String password =  binding.etPassword.getText().toString();
                 if (username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(LoginActivity.this,
+                    Toasty.error(LoginActivity.this,
                             "You must provide a username and password.",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT, true).show();
                     return;
                 }
                 bundle.putString("username", username);
@@ -86,15 +88,14 @@ public class LoginActivity extends AppCompatActivity {
                 if (e != null) {
                     // TODO: better error handling
                     Log.e(TAG, "Issue with login", e);
-                    Toast.makeText(
+                    Toasty.error(
                             LoginActivity.this,
                             e.toString(),
-                            Toast.LENGTH_SHORT)
+                            Toast.LENGTH_SHORT, true)
                             .show();
                 } else {
                     // navigate to main activity if the user has signed in properly
                     goMainActivity();
-                    Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

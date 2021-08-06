@@ -2,6 +2,7 @@ package com.example.personalproject.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -37,6 +38,7 @@ import java.net.URISyntaxException;
 
 import bolts.Continuation;
 import bolts.Task;
+import es.dmoral.toasty.Toasty;
 
 public class TransactionActivity extends AppCompatActivity {
     public static final String TAG = "TransactionActivity";
@@ -66,6 +68,9 @@ public class TransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityTransactionBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("instathrift");
 
         if (getIntent().getExtras() != null) {
             buyer = getIntent().getParcelableExtra("buyer");
@@ -111,9 +116,9 @@ public class TransactionActivity extends AppCompatActivity {
                             binding.btnTrans.setEnabled(false);
                             binding.btnTrans.setBackgroundColor(Color.GRAY);
                             if (!isStopped) {
-                                Toast.makeText(TransactionActivity.this,
+                                Toasty.error(TransactionActivity.this,
                                         "Sorry this item is no longer available.",
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_LONG, true).show();
                             }
                             Log.i(TAG, "Unsubscribing live query");
                             parseLiveQueryClient.unsubscribe(subscribedQuery);
@@ -132,10 +137,10 @@ public class TransactionActivity extends AppCompatActivity {
                 buyerEmail = binding.etEmailBuy.getText().toString();
 
                 if (buyerPhone.isEmpty() || buyerEmail.isEmpty()) {
-                    Toast.makeText(TransactionActivity.this,
+                    Toasty.error(TransactionActivity.this,
                             "You have left one or more required fields empty. " +
                                     "Please enter all information.",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT, true).show();
                     return;
                 }
                 Log.i(TAG, buyerPhone);
@@ -155,15 +160,17 @@ public class TransactionActivity extends AppCompatActivity {
                             Log.i(TAG, "Error while saving: " + task.getError());
                             hasPurchased = false;
                             binding.btnTrans.setEnabled(true);
-                            binding.btnTrans.setBackgroundColor(Color.MAGENTA);
-                            Toast.makeText(TransactionActivity.this,
+                            binding.btnTrans.setBackgroundColor(R.color.tea_green);
+                            Toasty.error(TransactionActivity.this,
                                     "Error saving item. Please try again.",
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG,
+                                    true).show();
                         } else {
                             Log.i(TAG, "Save was successful");
-                            Toast.makeText(TransactionActivity.this,
+                            Toasty.success(TransactionActivity.this,
                                     "Seller has been notified & will be in touch shortly!",
-                                            Toast.LENGTH_LONG).show();
+                                    Toasty.LENGTH_SHORT,
+                                    true).show();
                             Intent intent = new Intent(TransactionActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
@@ -207,6 +214,7 @@ public class TransactionActivity extends AppCompatActivity {
         binding.tvSellerTrans.setText("Seller: @" + seller.getUsername());
         binding.tvPriceTrans.setText("$" + item.getPrice().toString());
         binding.tvSizeTrans.setText("Size: " + item.getSize());
+        binding.etEmailBuy.setText(buyer.getEmail());
     }
 
 }
