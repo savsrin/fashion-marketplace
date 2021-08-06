@@ -40,6 +40,7 @@ import java.util.List;
 
 import bolts.Continuation;
 import bolts.Task;
+import es.dmoral.toasty.Toasty;
 
 public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
     public final String TAG = "SalesAdapter";
@@ -191,6 +192,8 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
                                 /* Note that the UI is updated when the live subscription gets an
                                    update notification for the item.*/
                                 Log.i(TAG, "Save was successful");
+                                Toasty.info(context, "Item transaction has been successfully confirmed."
+                                        ,Toasty.LENGTH_SHORT, true).show();
                             }
                             return null;
                         }
@@ -216,6 +219,8 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
                                 /* Note that the UI is updated when the live subscription gets an
                                    update notification for the item.*/
                                 Log.i(TAG, "Cancellation was successful");
+                                Toasty.info(context, "Item transaction has been successfully cancelled."
+                                        , Toasty.LENGTH_SHORT, true).show();
                             }
                             return null;
                         }
@@ -226,14 +231,13 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder>{
 
         private void initPendingItemView(Item item) {
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.VISIBLE);
-            itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.VISIBLE);
+            itemSaleTransactionBinding.btnCancelTransaction.setVisibility(View.VISIBLE);
             itemSaleTransactionBinding.tvStatusSalesTransac.setText("PENDING");
             Glide.with(context).load(R.drawable.bell_alert).into(itemSaleTransactionBinding.ivIconStatus);
         }
 
         private void initNonPendingItemView(Item item) {
             itemSaleTransactionBinding.btnCancelTransaction.setVisibility(View.INVISIBLE);
-            itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.INVISIBLE);
             itemSaleTransactionBinding.btnConfirmPayment.setVisibility(View.INVISIBLE);
             if (item.getStatus() == Item.AVAILABLE) {
                 itemSaleTransactionBinding.tvStatusSalesTransac.setText("AVAILABLE");
